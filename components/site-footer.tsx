@@ -36,7 +36,14 @@ export function SiteFooter() {
 
         <div className="mt-10 border-t border-border pt-8 text-center text-sm text-muted-foreground">
           <p>This website is operated by MKV Company</p>
-          <p className="mt-1">mkvcompany.business</p>
+          <p className="mt-1">
+            <a
+              href="mailto:contact@mkvcompany.business"
+              className="transition-colors hover:text-foreground"
+            >
+              contact@mkvcompany.business
+            </a>
+          </p>
           <p className="mt-1">
             &copy; {new Date().getFullYear()} MKV Company. All rights reserved.
           </p>
