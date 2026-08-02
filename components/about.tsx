@@ -55,7 +55,7 @@ export function About() {
               key={value.title}
               className="flex gap-4 rounded-xl border border-border bg-card p-6"
             >
-              <div className="inline-flex size-10 shrink-0 items-center justify-center rounded-lg border border-border bg-secondary">
+              <div className="inline-flex size-10 shrink-0 items-center justify-center rounded-lg border border-border bg-secondary text-primary">
                 <value.icon className="size-5" aria-hidden="true" />
               </div>
               <div>

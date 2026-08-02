@@ -41,7 +41,7 @@ export function AiSolutions() {
             {capabilities.map((item) => (
               <li key={item} className="flex items-start gap-2.5">
                 <Check
-                  className="mt-0.5 size-4 shrink-0 text-foreground"
+                  className="mt-0.5 size-4 shrink-0 text-primary"
                   aria-hidden="true"
                 />
                 <span className="text-sm leading-relaxed text-muted-foreground">
@@ -53,7 +53,7 @@ export function AiSolutions() {
 
           <a
             href="#contact"
-            className="mt-10 inline-flex items-center rounded-lg border border-border bg-secondary px-5 py-2.5 text-sm font-medium transition-colors hover:bg-accent"
+            className="mt-10 inline-flex items-center rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
           >
             Explore AI Solutions
           </a>
@@ -65,7 +65,7 @@ export function AiSolutions() {
               key={card.title}
               className="rounded-xl border border-border bg-card p-6"
             >
-              <div className="mb-5 inline-flex size-10 items-center justify-center rounded-lg border border-border bg-secondary">
+              <div className="mb-5 inline-flex size-10 items-center justify-center rounded-lg border border-border bg-secondary text-primary">
                 <card.icon className="size-5" aria-hidden="true" />
               </div>
               <h3 className="text-base font-semibold tracking-tight">

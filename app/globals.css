@@ -47,27 +47,27 @@
 }
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
   --radius: 0.75rem;
 
-  --background: oklch(0.03 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.09 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.09 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.97 0 0);
-  --primary-foreground: oklch(0.08 0 0);
-  --secondary: oklch(0.16 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.16 0 0);
-  --muted-foreground: oklch(0.68 0 0);
-  --accent: oklch(0.18 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.6 0.19 22);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 14%);
-  --ring: oklch(0.7 0 0);
+  --background: oklch(0.985 0.012 78);
+  --foreground: oklch(0.24 0.028 52);
+  --card: oklch(1 0.005 78);
+  --card-foreground: oklch(0.24 0.028 52);
+  --popover: oklch(1 0.005 78);
+  --popover-foreground: oklch(0.24 0.028 52);
+  --primary: oklch(0.66 0.185 46);
+  --primary-foreground: oklch(0.995 0.008 78);
+  --secondary: oklch(0.955 0.032 74);
+  --secondary-foreground: oklch(0.32 0.06 48);
+  --muted: oklch(0.955 0.032 74);
+  --muted-foreground: oklch(0.5 0.045 52);
+  --accent: oklch(0.92 0.055 72);
+  --accent-foreground: oklch(0.3 0.07 46);
+  --destructive: oklch(0.55 0.2 25);
+  --border: oklch(0.66 0.185 46 / 18%);
+  --input: oklch(0.66 0.185 46 / 26%);
+  --ring: oklch(0.66 0.185 46);
 }
 
 @layer base {
@@ -82,12 +82,12 @@
 @utility grid-backdrop {
   background-image: linear-gradient(
       to right,
-      color-mix(in oklab, var(--foreground) 6%, transparent) 1px,
+      color-mix(in oklab, var(--primary) 16%, transparent) 1px,
       transparent 1px
     ),
     linear-gradient(
       to bottom,
-      color-mix(in oklab, var(--foreground) 6%, transparent) 1px,
+      color-mix(in oklab, var(--primary) 16%, transparent) 1px,
       transparent 1px
     );
   background-size: 72px 72px;

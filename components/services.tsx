@@ -48,9 +48,9 @@ export function Services() {
           {services.map((service) => (
             <article
               key={service.title}
-              className="flex flex-col rounded-xl border border-border bg-card p-6 transition-colors hover:border-foreground/25"
+              className="flex flex-col rounded-xl border border-border bg-card p-6 transition-colors hover:border-primary/45"
             >
-              <div className="mb-5 inline-flex size-10 items-center justify-center rounded-lg border border-border bg-secondary">
+              <div className="mb-5 inline-flex size-10 items-center justify-center rounded-lg border border-border bg-secondary text-primary">
                 <service.icon className="size-5" aria-hidden="true" />
               </div>
               <h3 className="text-base font-semibold tracking-tight">

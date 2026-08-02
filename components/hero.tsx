@@ -46,7 +46,7 @@ export function Hero() {
               key={stat.label}
               className="rounded-xl border border-border bg-card px-6 py-6"
             >
-              <div className="text-3xl font-bold tracking-tight">
+              <div className="text-3xl font-bold tracking-tight text-primary">
                 {stat.value}
               </div>
               <div className="mt-1 text-sm text-muted-foreground">
