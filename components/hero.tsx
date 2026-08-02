@@ -5,15 +5,19 @@ const stats = [
 ]
 
 const platforms = [
-  { name: 'Shopify', src: '/logos/shopify.svg' },
-  { name: 'Mailchimp', src: '/logos/mailchimp.svg' },
-  { name: 'Meta Ads', src: '/logos/meta.svg' },
-  { name: 'Google Ads', src: '/logos/google-ads.svg' },
-  { name: 'TikTok', src: '/logos/tiktok.svg' },
-  { name: 'Stripe', src: '/logos/stripe.svg' },
-  { name: 'Next.js', src: '/logos/nextdotjs.svg' },
+  { name: 'Shopify', src: '/logos/shopify-default.svg' },
+  { name: 'Mailchimp', src: '/logos/mailchimp-default.svg' },
+  { name: 'Meta Ads', src: '/logos/meta-default.svg' },
+  { name: 'Google Ads', src: '/logos/google-ads-default.svg' },
+  { name: 'TikTok', src: '/logos/tiktok-default.svg' },
+  { name: 'Stripe', src: '/logos/stripe-default.svg' },
+  { name: 'Next.js', src: '/logos/nextdotjs-default.svg' },
   { name: 'Vercel', src: '/logos/vercel.svg' },
 ]
+
+// Repeat the list so a single group is always wider than the viewport,
+// which keeps the -50% marquee loop seamless with no blank gaps.
+const marqueeGroup = [...platforms, ...platforms, ...platforms]
 
 export function Hero() {
   return (
@@ -29,7 +33,7 @@ export function Hero() {
 
       <div className="relative mx-auto flex w-full max-w-4xl flex-col items-center px-6 py-24 text-center md:py-32">
         <img
-          src="/mkv-logo.svg"
+          src="/mkv-logo.png"
           alt="MKV Company — Vision to Visibility"
           className="mb-10 h-28 w-auto sm:h-32 md:h-40"
         />
@@ -64,17 +68,24 @@ export function Hero() {
         <p className="mb-6 text-center font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
           Platforms we build on
         </p>
-        <div className="relative flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
+        <div
+          className="relative flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"
+          role="img"
+          aria-label="Platforms we build on: Shopify, Mailchimp, Meta Ads, Google Ads, TikTok, Stripe, Next.js, and Vercel"
+        >
+          {/* Single track holding two identical halves; translateX(-50%)
+              scrolls exactly one half so the loop is perfectly seamless. */}
           <div className="flex w-max shrink-0 animate-marquee items-center">
-            {[...platforms, ...platforms].map((platform, index) => (
+            {[...marqueeGroup, ...marqueeGroup].map((platform, index) => (
               <span
                 key={`${platform.name}-${index}`}
-                className="flex items-center px-10"
+                className="flex items-center px-8 sm:px-12"
+                aria-hidden="true"
               >
                 <img
-                  src={platform.src || "/placeholder.svg"}
-                  alt={platform.name}
-                  className="h-7 w-auto opacity-45 transition-opacity duration-300 hover:opacity-90"
+                  src={platform.src || '/placeholder.svg'}
+                  alt=""
+                  className="h-10 w-auto transition-transform duration-300 hover:scale-110 md:h-12"
                 />
               </span>
             ))}

@@ -14,7 +14,7 @@ export function SiteFooter() {
         <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
           <a href="#top" className="flex items-center" aria-label="MKV Company home">
             <img
-              src="/mkv-logo.svg"
+              src="/mkv-logo.png"
               alt="MKV Company — Vision to Visibility"
               className="h-14 w-auto"
             />

@@ -18,7 +18,7 @@ export function SiteHeader() {
       <div className="mx-auto flex h-20 w-full max-w-6xl items-center justify-between px-6">
         <a href="#top" className="flex items-center" aria-label="MKV Company home">
           <img
-            src="/mkv-logo.svg"
+            src="/mkv-logo.png"
             alt="MKV Company — Vision to Visibility"
             className="h-12 w-auto md:h-14"
           />
