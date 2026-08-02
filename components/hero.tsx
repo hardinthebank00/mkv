@@ -30,6 +30,11 @@ export function Hero() {
       />
 
       <div className="relative mx-auto flex w-full max-w-4xl flex-col items-center px-6 py-24 text-center md:py-32">
+        <img
+          src="/mkv-logo.png"
+          alt="MKV Company — Vision to Visibility"
+          className="mb-10 h-16 w-auto md:h-20"
+        />
         <h1 className="text-balance text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
           Your D2C E-Commerce Partner
         </h1>

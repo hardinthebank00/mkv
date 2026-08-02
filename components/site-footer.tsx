@@ -12,11 +12,12 @@ export function SiteFooter() {
     <footer className="py-14">
       <div className="mx-auto w-full max-w-6xl px-6">
         <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
-          <a
-            href="#top"
-            className="text-lg font-bold italic tracking-tight text-foreground"
-          >
-            MKV Company
+          <a href="#top" className="flex items-center" aria-label="MKV Company home">
+            <img
+              src="/mkv-logo.png"
+              alt="MKV Company — Vision to Visibility"
+              className="h-10 w-auto"
+            />
           </a>
           <nav
             aria-label="Footer"
