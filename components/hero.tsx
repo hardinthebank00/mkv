@@ -5,21 +5,19 @@ const stats = [
 ]
 
 const platforms = [
-  'Shopify Plus',
-  'Klaviyo',
-  'Meta Ads',
-  'Google Ads',
-  'TikTok Shop',
-  'Stripe',
-  'Next.js',
-  'Vercel',
-  'Postscript',
-  'Triple Whale',
+  { name: 'Shopify', src: '/logos/shopify.svg' },
+  { name: 'Mailchimp', src: '/logos/mailchimp.svg' },
+  { name: 'Meta Ads', src: '/logos/meta.svg' },
+  { name: 'Google Ads', src: '/logos/google-ads.svg' },
+  { name: 'TikTok', src: '/logos/tiktok.svg' },
+  { name: 'Stripe', src: '/logos/stripe.svg' },
+  { name: 'Next.js', src: '/logos/nextdotjs.svg' },
+  { name: 'Vercel', src: '/logos/vercel.svg' },
 ]
 
 export function Hero() {
   return (
-    <section id="top" className="relative overflow-hidden pt-16">
+    <section id="top" className="relative overflow-hidden pt-20">
       <div
         aria-hidden="true"
         className="grid-backdrop pointer-events-none absolute inset-0"
@@ -31,9 +29,9 @@ export function Hero() {
 
       <div className="relative mx-auto flex w-full max-w-4xl flex-col items-center px-6 py-24 text-center md:py-32">
         <img
-          src="/mkv-logo.png"
+          src="/mkv-logo.svg"
           alt="MKV Company — Vision to Visibility"
-          className="mb-10 h-16 w-auto md:h-20"
+          className="mb-10 h-28 w-auto sm:h-32 md:h-40"
         />
         <h1 className="text-balance text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
           Your D2C E-Commerce Partner
@@ -68,12 +66,16 @@ export function Hero() {
         </p>
         <div className="relative flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
           <div className="flex w-max shrink-0 animate-marquee items-center">
-            {[...platforms, ...platforms].map((name, index) => (
+            {[...platforms, ...platforms].map((platform, index) => (
               <span
-                key={`${name}-${index}`}
-                className="px-10 text-lg font-semibold tracking-tight text-muted-foreground"
+                key={`${platform.name}-${index}`}
+                className="flex items-center px-10"
               >
-                {name}
+                <img
+                  src={platform.src || "/placeholder.svg"}
+                  alt={platform.name}
+                  className="h-7 w-auto opacity-45 transition-opacity duration-300 hover:opacity-90"
+                />
               </span>
             ))}
           </div>
