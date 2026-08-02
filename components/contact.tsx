@@ -30,7 +30,7 @@ export function Contact() {
           </p>
 
           <a
-            href="mailto:hello@mkvcompany.business"
+            href="mailto:contact@mkvcompany.business"
             className="mt-8 inline-flex items-center gap-4 rounded-xl border border-border bg-card p-4 transition-colors hover:border-primary/45"
           >
             <span className="inline-flex size-10 items-center justify-center rounded-lg border border-border bg-secondary text-primary">
@@ -41,7 +41,7 @@ export function Contact() {
                 Email us at
               </span>
               <span className="block text-sm font-semibold">
-                hello@mkvcompany.business
+                contact@mkvcompany.business
               </span>
             </span>
           </a>
