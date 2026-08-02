@@ -1,11 +1,42 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
+import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 
+const _geistSans = Geist({ subsets: ['latin'] })
+const _geistMono = Geist_Mono({ subsets: ['latin'] })
+
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
+  metadataBase: new URL('https://mkvcompany.business'),
+  title: {
+    default: 'MKV Company — D2C E-Commerce & AI Growth Partner',
+    template: '%s | MKV Company',
+  },
+  description:
+    'MKV Company builds, scales, and automates direct-to-consumer e-commerce brands with custom development, paid media, retention marketing, and AI-driven operations.',
+  keywords: [
+    'MKV Company',
+    'D2C e-commerce agency',
+    'Shopify development',
+    'paid media',
+    'email marketing',
+    'AI automation',
+  ],
   generator: 'v0.app',
+  openGraph: {
+    type: 'website',
+    url: 'https://mkvcompany.business',
+    siteName: 'MKV Company',
+    title: 'MKV Company — D2C E-Commerce & AI Growth Partner',
+    description:
+      'Full-service e-commerce development, growth marketing, and AI automation for direct-to-consumer brands.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'MKV Company — D2C E-Commerce & AI Growth Partner',
+    description:
+      'Full-service e-commerce development, growth marketing, and AI automation for direct-to-consumer brands.',
+  },
   icons: {
     icon: [
       {
@@ -26,11 +57,8 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  colorScheme: 'light dark',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: 'white' },
-    { media: '(prefers-color-scheme: dark)', color: 'black' },
-  ],
+  colorScheme: 'dark',
+  themeColor: '#080808',
 }
 
 export default function RootLayout({
@@ -39,8 +67,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className="antialiased">
+    <html lang="en" className="bg-background">
+      <body className="font-sans antialiased">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
