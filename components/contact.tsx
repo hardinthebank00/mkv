@@ -41,7 +41,7 @@ export function Contact() {
                 Email us at
               </span>
               <span className="block text-sm font-semibold">
-                mkvcompany.business
+                contact@mkvcompany.business
               </span>
             </span>
           </a>
