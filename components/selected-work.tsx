@@ -1,3 +1,5 @@
+import { AccentWord } from './accent-word'
+
 const work = [
   {
     ref: '§001',
@@ -42,7 +44,7 @@ export function SelectedWork() {
           <div>
             <span className="label-mono">selected work</span>
             <h2 className="mt-4 max-w-xl text-balance text-3xl font-medium tracking-tight md:text-5xl">
-              outcomes we&apos;ve <span className="accent-serif">shipped</span>
+              outcomes we&apos;ve <AccentWord>shipped</AccentWord>
             </h2>
           </div>
           <span className="label-mono hidden shrink-0 md:inline">/ 003</span>

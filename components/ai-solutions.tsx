@@ -1,3 +1,5 @@
+import { AccentWord } from './accent-word'
+
 const capabilities = [
   'support agents',
   'demand forecasting',
@@ -19,7 +21,7 @@ export function AiSolutions() {
         <div className="py-16 md:py-24">
           <p className="max-w-4xl text-balance text-3xl font-medium leading-[1.15] tracking-tight md:text-5xl md:leading-[1.1]">
             we treat ai as{' '}
-            <span className="accent-serif">infrastructure</span>, not a feature.
+            <AccentWord>infrastructure</AccentWord>, not a feature.
             practical systems that shorten response times, sharpen forecasting,
             and remove the repetitive work that{' '}
             <span className="ink-highlight">slows a growing brand down.</span>
@@ -42,7 +44,7 @@ export function AiSolutions() {
           </div>
 
           <a
-            href="#contact"
+            href="/start"
             className="mt-12 inline-flex items-center rounded-full bg-foreground px-6 py-3 font-mono text-xs uppercase tracking-[0.12em] text-background transition-opacity hover:opacity-90"
           >
             explore ai solutions

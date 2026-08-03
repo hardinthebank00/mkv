@@ -118,12 +118,12 @@
   padding-inline: 0.1em;
 }
 
-/* Fancy serif italic accent, bold, orange */
+/* Fancy serif italic accent, bold, dark text with highlight applied inline */
 @utility accent-serif {
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 600;
-  color: var(--primary);
+  color: var(--foreground);
 }
 
 

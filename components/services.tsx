@@ -1,3 +1,5 @@
+import { AccentWord } from './accent-word'
+
 const services = [
   {
     index: '01',
@@ -42,7 +44,7 @@ export function Services() {
             <span className="label-mono">services</span>
             <h2 className="mt-4 max-w-xl text-balance text-3xl font-medium tracking-tight md:text-5xl">
               four levers we pull to{' '}
-              <span className="accent-serif">grow</span> your brand
+              <AccentWord>grow</AccentWord> your brand
             </h2>
           </div>
           <span className="label-mono hidden shrink-0 md:inline">/ 002</span>
@@ -60,8 +62,8 @@ export function Services() {
                 <h3 className="text-2xl font-medium tracking-tight md:text-3xl">
                   {service.title}
                 </h3>
-                <p className="accent-serif mt-1 text-lg md:text-xl">
-                  {service.accent}
+                <p className="mt-1 text-lg md:text-xl">
+                  <AccentWord>{service.accent}</AccentWord>
                 </p>
               </div>
 

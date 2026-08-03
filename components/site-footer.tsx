@@ -62,7 +62,7 @@ export function SiteFooter() {
               {/* Right: CTA */}
               <div className="shrink-0">
                 <a
-                  href="#contact"
+                  href="/start"
                   className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-mono text-xs font-semibold uppercase tracking-[0.12em] text-black transition-opacity hover:opacity-90"
                 >
                   start today

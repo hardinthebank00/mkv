@@ -1,3 +1,5 @@
+import { AccentWord } from './accent-word'
+
 const values = [
   {
     index: '01',
@@ -45,7 +47,7 @@ export function About() {
           <div className="md:col-span-5">
             <h2 className="text-balance text-3xl font-medium leading-[1.05] tracking-tight md:text-5xl">
               a commerce team that works like{' '}
-              <span className="accent-serif">yours</span>
+              <AccentWord>yours</AccentWord>
             </h2>
             <p className="mt-6 max-w-md text-pretty leading-relaxed text-muted-foreground">
               MKV Company is a digital commerce studio helping brands sell
