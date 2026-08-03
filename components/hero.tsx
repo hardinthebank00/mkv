@@ -2,7 +2,16 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-const rotatingWords = ['move', 'grow', 'support', 'assist', 'scale']
+const rotatingWords = [
+  'move',
+  'grow',
+  'support',
+  'assist',
+  'scale',
+  'automate',
+  'convert',
+  'accelerate',
+]
 
 const platforms = [
   { name: 'Shopify', src: '/logos/shopify-default.svg', href: 'https://www.shopify.com' },
@@ -62,18 +71,37 @@ export function Hero() {
 
         {/* Headline */}
         <div className="py-14 md:py-20">
-          <h1 className="max-w-5xl text-balance text-5xl font-medium leading-[0.95] tracking-tight sm:text-6xl md:text-7xl lg:text-[5.5rem]">
+          <h1 className="max-w-5xl text-balance text-5xl font-semibold leading-[0.95] tracking-tight sm:text-6xl md:text-7xl lg:text-[5.5rem]">
             we build tools that{' '}
             <span
-              className="relative inline-flex h-[0.95em] overflow-hidden align-bottom transition-[width] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+              className="relative inline-flex h-[1.15em] items-center overflow-hidden align-bottom transition-[width] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
               style={activeWidth ? { width: activeWidth } : undefined}
               aria-hidden="true"
             >
+              {rotatingWords.map((word, i) => {
+                const prevIndex =
+                  (wordIndex - 1 + rotatingWords.length) % rotatingWords.length
+                const offset =
+                  i === wordIndex ? '0%' : i === prevIndex ? '-110%' : '110%'
+                return (
+                  <span
+                    key={word}
+                    className="absolute inset-0 flex items-center whitespace-nowrap transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                    style={{
+                      transform: `translateY(${offset})`,
+                      opacity: i === wordIndex ? 1 : 0,
+                    }}
+                  >
+                    <span className="mark-highlight accent-serif leading-none">
+                      {word}
+                    </span>
+                  </span>
+                )
+              })}
+              {/* Hidden measuring layer so the box hugs each word's real width */}
               <span
-                className="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
-                style={{
-                  transform: `translateY(-${wordIndex * (100 / rotatingWords.length)}%)`,
-                }}
+                className="pointer-events-none invisible absolute left-0 top-0 flex flex-col"
+                aria-hidden="true"
               >
                 {rotatingWords.map((word, i) => (
                   <span
@@ -81,11 +109,9 @@ export function Hero() {
                     ref={(el) => {
                       measureRefs.current[i] = el
                     }}
-                    className="flex h-[0.95em] w-fit items-center whitespace-nowrap"
+                    className="accent-serif whitespace-nowrap px-[0.14em]"
                   >
-                    <span className="mark-highlight accent-serif not-italic">
-                      {word}
-                    </span>
+                    {word}
                   </span>
                 ))}
               </span>

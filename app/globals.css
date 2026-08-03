@@ -7,7 +7,7 @@
 @theme inline {
   --font-sans: 'Geist', 'Geist Fallback';
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
-  --font-serif: 'Instrument Serif', 'Instrument Serif Fallback', ui-serif, serif;
+  --font-serif: 'Fraunces', 'Fraunces Fallback', ui-serif, serif;
 
   --color-ring: var(--ring);
   --color-input: var(--input);
@@ -118,24 +118,24 @@
   padding-inline: 0.1em;
 }
 
-/* Serif italic accent, orange */
+/* Fancy serif italic accent, bold, orange */
 @utility accent-serif {
   font-family: var(--font-serif);
   font-style: italic;
-  font-weight: 400;
+  font-weight: 600;
   color: var(--primary);
 }
 
-/* Acid-yellow marker-style highlight behind inline text (23.agency style) */
+/* MKV-orange marker-style highlight behind inline text (23.agency style) */
 @utility mark-highlight {
   background-image: linear-gradient(
     to bottom,
     transparent 10%,
-    oklch(0.92 0.19 105 / 0.85) 10%,
-    oklch(0.92 0.19 105 / 0.85) 92%,
+    color-mix(in oklab, var(--primary) 32%, transparent) 10%,
+    color-mix(in oklab, var(--primary) 32%, transparent) 92%,
     transparent 92%
   );
-  padding-inline: 0.12em;
+  padding-inline: 0.14em;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }

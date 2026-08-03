@@ -1,6 +1,6 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono, Instrument_Serif } from 'next/font/google'
+import { Geist, Geist_Mono, Fraunces } from 'next/font/google'
 import './globals.css'
 
 const geistSans = Geist({
@@ -11,11 +11,11 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
   variable: '--font-geist-mono',
 })
-const instrumentSerif = Instrument_Serif({
+const fraunces = Fraunces({
   subsets: ['latin'],
-  weight: '400',
+  weight: ['400', '500', '600', '700'],
   style: ['normal', 'italic'],
-  variable: '--font-instrument-serif',
+  variable: '--font-fraunces',
 })
 
 export const metadata: Metadata = {
@@ -81,7 +81,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`bg-background ${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
+      className={`bg-background ${geistSans.variable} ${geistMono.variable} ${fraunces.variable}`}
     >
       <body className="font-sans antialiased">
         {children}
