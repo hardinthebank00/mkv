@@ -132,6 +132,47 @@ ${message}`,
         message: 'Something went wrong sending your message. Please try again.',
       }
     }
+
+    // Confirmation auto-reply to the customer. Best-effort — a failure here
+    // shouldn't block the successful inbound submission above.
+    try {
+      await resend.emails.send({
+        from: FROM_EMAIL,
+        to: email,
+        replyTo: TO_EMAIL,
+        subject: 'Thanks for reaching out to MKV Company',
+        html: `
+          <div style="font-family: system-ui, sans-serif; line-height: 1.6; color: #111;">
+            <h2 style="margin-bottom: 4px;">Thanks, ${escapeHtml(firstName)}.</h2>
+            <p style="margin: 0 0 16px; color: #444;">
+              We've received your inquiry and a member of the MKV Company team will get back to you within 24&ndash;48 hours to set up an intro call.
+            </p>
+            <div style="margin: 20px 0; padding: 16px; background: #f6f6f4; border-radius: 8px;">
+              <p style="margin: 0 0 6px; color: #666; font-size: 13px;">Here's what you sent us</p>
+              <p style="margin: 0; white-space: pre-wrap;">${escapeHtml(message)}</p>
+            </div>
+            <p style="margin: 0 0 4px; color: #444;">
+              Need to add something? Just reply to this email.
+            </p>
+            <p style="margin: 24px 0 0; color: #999; font-size: 13px;">
+              — MKV Company · Vision to Visibility
+            </p>
+          </div>
+        `,
+        text: `Thanks, ${firstName}.
+
+We've received your inquiry and a member of the MKV Company team will get back to you within 24-48 hours to set up an intro call.
+
+Here's what you sent us:
+${message}
+
+Need to add something? Just reply to this email.
+
+— MKV Company · Vision to Visibility`,
+      })
+    } catch (autoReplyErr) {
+      console.log('[v0] Auto-reply failed (non-blocking):', autoReplyErr)
+    }
   } catch (err) {
     console.log('[v0] submitInquiry exception:', err)
     return {
