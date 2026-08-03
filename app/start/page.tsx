@@ -160,7 +160,7 @@ export default function StartPage() {
 
                     <button
                       type="submit"
-                      className="inline-flex w-full items-center justify-center rounded-full bg-foreground px-6 py-3.5 font-mono text-xs uppercase tracking-[0.12em] text-background transition-opacity hover:opacity-90 sm:w-auto sm:self-start sm:px-10"
+                      className="inline-flex w-full items-center justify-center rounded-full bg-primary px-6 py-3.5 font-mono text-xs uppercase tracking-[0.12em] text-black transition-opacity hover:opacity-90 sm:w-auto sm:self-start sm:px-10"
                     >
                       send inquiry
                     </button>
