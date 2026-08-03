@@ -118,12 +118,13 @@
   padding-inline: 0.1em;
 }
 
-/* Fancy serif italic accent, bold, dark text with highlight applied inline */
+/* Thin serif italic accent, dark text with highlight applied inline */
 @utility accent-serif {
   font-family: var(--font-serif);
   font-style: italic;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--foreground);
+  line-height: 1.3;
 }
 
 
