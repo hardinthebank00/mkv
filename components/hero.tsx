@@ -1,3 +1,9 @@
+'use client'
+
+import { useEffect, useRef, useState } from 'react'
+
+const rotatingWords = ['move', 'grow', 'support', 'assist', 'scale']
+
 const platforms = [
   { name: 'Shopify', src: '/logos/shopify-default.svg', href: 'https://www.shopify.com' },
   { name: 'Mailchimp', src: '/logos/mailchimp-default.svg', href: 'https://mailchimp.com' },
@@ -21,6 +27,27 @@ const stats = [
 ]
 
 export function Hero() {
+  const [wordIndex, setWordIndex] = useState(0)
+  const [widths, setWidths] = useState<number[]>([])
+  const measureRefs = useRef<(HTMLSpanElement | null)[]>([])
+
+  useEffect(() => {
+    const measure = () =>
+      setWidths(measureRefs.current.map((el) => el?.offsetWidth ?? 0))
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [])
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setWordIndex((i) => (i + 1) % rotatingWords.length)
+    }, 2000)
+    return () => clearInterval(id)
+  }, [])
+
+  const activeWidth = widths[wordIndex]
+
   return (
     <section id="top" className="relative overflow-hidden pt-16">
       <div className="mx-auto w-full max-w-6xl px-4 md:px-6">
@@ -36,9 +63,37 @@ export function Hero() {
         {/* Headline */}
         <div className="py-14 md:py-20">
           <h1 className="max-w-5xl text-balance text-5xl font-medium leading-[0.95] tracking-tight sm:text-6xl md:text-7xl lg:text-[5.5rem]">
-            we turn d2c <span className="accent-serif">vision</span> into{' '}
-            <span className="accent-serif">visibility</span>, revenue, and
-            retention.
+            we build tools that{' '}
+            <span
+              className="relative inline-flex h-[0.95em] overflow-hidden align-bottom transition-[width] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+              style={activeWidth ? { width: activeWidth } : undefined}
+              aria-hidden="true"
+            >
+              <span
+                className="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                style={{
+                  transform: `translateY(-${wordIndex * (100 / rotatingWords.length)}%)`,
+                }}
+              >
+                {rotatingWords.map((word, i) => (
+                  <span
+                    key={word}
+                    ref={(el) => {
+                      measureRefs.current[i] = el
+                    }}
+                    className="flex h-[0.95em] w-fit items-center whitespace-nowrap"
+                  >
+                    <span className="mark-highlight accent-serif not-italic">
+                      {word}
+                    </span>
+                  </span>
+                ))}
+              </span>
+            </span>
+            <span className="sr-only">
+              {rotatingWords.join(', ')} your business
+            </span>{' '}
+            your business.
           </h1>
 
           <div className="mt-10 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">

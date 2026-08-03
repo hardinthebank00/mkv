@@ -125,3 +125,17 @@
   font-weight: 400;
   color: var(--primary);
 }
+
+/* Acid-yellow marker-style highlight behind inline text (23.agency style) */
+@utility mark-highlight {
+  background-image: linear-gradient(
+    to bottom,
+    transparent 10%,
+    oklch(0.92 0.19 105 / 0.85) 10%,
+    oklch(0.92 0.19 105 / 0.85) 92%,
+    transparent 92%
+  );
+  padding-inline: 0.12em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
