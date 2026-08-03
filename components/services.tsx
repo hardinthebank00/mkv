@@ -6,7 +6,7 @@ const services = [
     title: 'storefront engineering',
     accent: 'built to convert',
     description:
-      'Custom websites, automated workflows, and AI chatbots that handle customer conversations and orders. Built for speed, designed to sell, and easy for your team to run.',
+      'Custom websites, automated workflows, and AI powered customer service agents that handle customer conversations and orders. Built for speed, designed to sell, and easy for your team to run.',
     tags: ['Shopify', 'Headless', 'Next.js'],
   },
   {
