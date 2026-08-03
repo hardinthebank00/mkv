@@ -3,13 +3,13 @@ import { AccentWord } from './accent-word'
 const work = [
   {
     ref: '§001',
-    category: 'apparel',
-    title: 'headless replatform',
+    category: 'pet products',
+    title: 'dog toy store rebuild',
     summary:
-      'Rebuilt a legacy storefront on a headless stack, cutting load time and lifting checkout conversion.',
+      'Built a faster, cleaner website that loads quickly and makes buying easier. Customers get in, find what they want, and check out without friction.',
     metrics: [
       { value: '2.4x', label: 'faster loads' },
-      { value: '+37%', label: 'checkout cvr' },
+      { value: '+37%', label: 'more sales' },
     ],
   },
   {
