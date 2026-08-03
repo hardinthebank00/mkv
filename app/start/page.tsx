@@ -52,12 +52,12 @@ export default function StartPage() {
                 </p>
 
                 <a
-                  href="mailto:contact@mkvcompany.business"
+                  href="mailto:main@mkvcompany.business"
                   className="mt-10 inline-flex items-center gap-3 border-b border-border pb-2 transition-colors hover:border-primary"
                 >
                   <span className="label-mono">email</span>
                   <span className="text-lg font-medium tracking-tight">
-                    mkvcompany.business
+                    main@mkvcompany.business
                   </span>
                 </a>
 

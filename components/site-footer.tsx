@@ -17,7 +17,7 @@ const linkColumns = [
     heading: 'connect',
     links: [
       { href: '#contact', label: 'start a project' },
-      { href: 'mailto:contact@mkvcompany.business', label: 'email' },
+      { href: 'mailto:main@mkvcompany.business', label: 'email' },
     ],
   },
   {

@@ -142,10 +142,10 @@ export default function TermsPage() {
         <p>
           Email:{' '}
           <a
-            href="mailto:contact@mkvcompany.business"
+            href="mailto:main@mkvcompany.business"
             className="text-primary transition-colors hover:underline"
           >
-            contact@mkvcompany.business
+            main@mkvcompany.business
           </a>
         </p>
       </LegalSection>
