@@ -42,21 +42,12 @@ export function SiteHeader() {
       }`}
     >
       <div className="flex h-16 w-full items-center justify-between pl-4 pr-4 md:pl-6 md:pr-6">
-        <a
-          href="#"
-          onClick={handleLogoClick}
-          className="flex items-center gap-2"
-          aria-label="MKV Company home"
-        >
+        <a href="#" onClick={handleLogoClick} className="flex items-center" aria-label="MKV Company home">
           <img
-            src="/mkv-icon.png"
-            alt=""
-            aria-hidden="true"
-            className="h-11 w-11 shrink-0 object-contain md:h-12 md:w-12"
+            src="/mkv-logo.png"
+            alt="MKV Company — Vision to Visibility"
+            className="h-9 w-auto md:h-10"
           />
-          <span className="text-lg font-semibold tracking-tight text-foreground">
-            mkv company
-          </span>
         </a>
 
         <nav aria-label="Main" className="hidden items-center gap-8 md:flex">
