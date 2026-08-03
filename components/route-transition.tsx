@@ -16,15 +16,23 @@ const RouteTransitionContext = createContext<(href: string) => void>(() => {})
 
 export const useRouteTransition = () => useContext(RouteTransitionContext)
 
-// Vertical bars that fill in left -> right, then clear out left -> right.
+// Thin vertical bars that fill in left -> right (growing horizontally),
+// then clear out left -> right to reveal the new page.
 const COLUMNS = 6
-const BAR_MS = 260 // how long a single bar takes to fill/clear
-const STAGGER_MS = 55 // delay between each bar
+const BAR_MS = 200 // how long a single bar takes to fill/clear
+const STAGGER_MS = 48 // delay between each bar (drives the left->right sweep)
+
+// The three brand letters, revealed one at a time as the sweep crosses.
+const LETTERS = [
+  { src: '/mkv-letter-m.png', alt: 'M' },
+  { src: '/mkv-letter-k.png', alt: 'K' },
+  { src: '/mkv-letter-v.png', alt: 'V' },
+]
 
 // Total time for all bars to finish a sweep (last bar starts + its duration).
 const SWEEP_MS = BAR_MS + STAGGER_MS * (COLUMNS - 1)
 // Small buffer so the screen is guaranteed fully covered before we swap routes.
-const COVER_MS = SWEEP_MS + 40
+const COVER_MS = SWEEP_MS + 60
 
 export function RouteTransitionProvider({
   children,
@@ -65,7 +73,7 @@ export function RouteTransitionProvider({
   // Once the new route has mounted under the cover, clear the bars away.
   useEffect(() => {
     if (phase === 'cover' && pathname === targetPathRef.current) {
-      const t = window.setTimeout(() => setPhase('reveal'), 60)
+      const t = window.setTimeout(() => setPhase('reveal'), 80)
       return () => window.clearTimeout(t)
     }
     if (phase === 'reveal') {
@@ -89,11 +97,11 @@ export function RouteTransitionProvider({
         style={{ visibility: active ? 'visible' : 'hidden' }}
       >
         {Array.from({ length: COLUMNS }).map((_, i) => {
-          // Cover: bars fill top->bottom, staggered left->right.
-          // Reveal: bars clear bottom->up, staggered left->right.
+          // Cover: bars grow horizontally (scaleX 0->1) from the left, each
+          // one starting a beat after the last => a left->right sweep.
+          // Reveal: bars shrink back to the left (scaleX 1->0), same order.
           const filled = phase === 'cover'
-          const delay =
-            phase === 'idle' ? 0 : STAGGER_MS * (phase === 'cover' ? i : i)
+          const delay = STAGGER_MS * i
 
           return (
             <div key={i} className="relative h-full flex-1 overflow-hidden">
@@ -102,8 +110,8 @@ export function RouteTransitionProvider({
                   position: 'absolute',
                   inset: 0,
                   backgroundColor: 'var(--primary)',
-                  transformOrigin: filled ? 'top' : 'bottom',
-                  transform: filled ? 'scaleY(1)' : 'scaleY(0)',
+                  transformOrigin: 'left',
+                  transform: filled ? 'scaleX(1)' : 'scaleX(0)',
                   transition:
                     phase === 'idle'
                       ? 'none'
@@ -115,19 +123,29 @@ export function RouteTransitionProvider({
           )
         })}
 
-        {/* Brand mark centered over the covered screen. */}
-        <span
-          className="pointer-events-none absolute inset-0 flex items-center justify-center font-mono text-4xl font-semibold lowercase tracking-tight text-black md:text-6xl"
-          style={{
-            opacity: phase === 'cover' ? 1 : 0,
-            transform:
-              phase === 'cover' ? 'translateY(0)' : 'translateY(8px)',
-            transition: 'opacity 220ms ease, transform 220ms ease',
-            transitionDelay: phase === 'cover' ? `${SWEEP_MS - 120}ms` : '0ms',
-          }}
-        >
-          mkv
-        </span>
+        {/* Brand letters revealed one at a time, in sync with the sweep. */}
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center gap-[0.12em]">
+          {LETTERS.map((letter, i) => {
+            // Space each letter's reveal evenly across the sweep so M, K, V
+            // pop in one after another as the bars travel left -> right.
+            const revealAt = Math.round((SWEEP_MS - 120) * (i / LETTERS.length))
+            return (
+              <img
+                key={letter.src}
+                src={letter.src || '/placeholder.svg'}
+                alt={letter.alt}
+                className="h-14 w-auto md:h-20"
+                style={{
+                  opacity: phase === 'cover' ? 1 : 0,
+                  transform:
+                    phase === 'cover' ? 'translateY(0)' : 'translateY(10px)',
+                  transition: 'opacity 180ms ease, transform 180ms ease',
+                  transitionDelay: phase === 'cover' ? `${revealAt}ms` : '0ms',
+                }}
+              />
+            )
+          })}
+        </div>
       </div>
     </RouteTransitionContext.Provider>
   )
