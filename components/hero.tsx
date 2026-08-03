@@ -71,8 +71,8 @@ export function Hero() {
 
         {/* Headline */}
         <div className="py-14 md:py-20">
-          <h1 className="max-w-5xl text-balance text-5xl font-semibold leading-[0.95] tracking-tight sm:text-6xl md:text-7xl lg:text-[5.5rem]">
-            we build tools that{' '}
+          <h1 className="max-w-5xl text-pretty text-5xl font-semibold leading-[0.95] tracking-tight sm:text-6xl md:text-7xl lg:text-[5.5rem]">
+            we build the tools your business needs to{' '}
             <span
               className="relative inline-flex h-[1.15em] items-center overflow-hidden align-bottom transition-[width] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
               style={activeWidth ? { width: activeWidth } : undefined}
@@ -104,7 +104,7 @@ export function Hero() {
               })}
               {/* Hidden measuring layer so the box hugs each word's real width */}
               <span
-                className="pointer-events-none invisible absolute left-0 top-0 flex flex-col"
+                className="pointer-events-none invisible absolute left-0 top-0 flex flex-col items-start"
                 aria-hidden="true"
               >
                 {rotatingWords.map((word, i) => (
@@ -120,10 +120,10 @@ export function Hero() {
                 ))}
               </span>
             </span>
+            <span aria-hidden="true" className="-ml-[0.12em]">.</span>
             <span className="sr-only">
-              {rotatingWords.join(', ')} your business
-            </span>{' '}
-            your business.
+              {rotatingWords.join(', ')} your business.
+            </span>
           </h1>
 
           <div className="mt-10 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
