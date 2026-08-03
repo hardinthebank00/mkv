@@ -43,7 +43,7 @@ export function About() {
 
         <div className="grid grid-cols-1 gap-10 py-16 md:grid-cols-12 md:py-24">
           <div className="md:col-span-5">
-            <h2 className="font-serif font-semibold italic text-balance text-3xl font-medium leading-[1.05] tracking-tight md:text-5xl">
+            <h2 className="text-balance text-3xl font-medium leading-[1.05] tracking-tight md:text-5xl">
               a commerce team that works like{' '}
               <span className="accent-serif">yours</span>
             </h2>
@@ -76,7 +76,7 @@ export function About() {
                     {value.index}
                   </span>
                   <div>
-                    <h3 className="font-serif font-semibold italic text-xl font-medium tracking-tight">
+                    <h3 className="text-xl font-medium tracking-tight">
                       {value.title}
                     </h3>
                     <p className="mt-2 text-sm leading-relaxed text-muted-foreground">

@@ -41,7 +41,7 @@ export function SelectedWork() {
         <div className="flex items-end justify-between gap-6 border-b border-border py-8">
           <div>
             <span className="label-mono">selected work</span>
-            <h2 className="mt-4 max-w-xl font-serif font-semibold italic text-3xl font-medium tracking-tight md:text-5xl">
+            <h2 className="mt-4 max-w-xl text-balance text-3xl font-medium tracking-tight md:text-5xl">
               outcomes we&apos;ve <span className="accent-serif">shipped</span>
             </h2>
           </div>
@@ -63,7 +63,7 @@ export function SelectedWork() {
                   <span className="label-mono">{item.ref}</span>
                   <span className="label-mono">— {item.category}</span>
                 </div>
-                <h3 className="mt-6 font-serif font-semibold italic text-2xl font-medium tracking-tight">
+                <h3 className="mt-6 text-2xl font-medium tracking-tight">
                   {item.title}
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">

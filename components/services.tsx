@@ -40,7 +40,7 @@ export function Services() {
         <div className="flex items-end justify-between gap-6 border-b border-border py-8">
           <div>
             <span className="label-mono">services</span>
-            <h2 className="mt-4 max-w-xl font-serif font-semibold italic text-3xl font-medium tracking-tight md:text-5xl">
+            <h2 className="mt-4 max-w-xl text-balance text-3xl font-medium tracking-tight md:text-5xl">
               four levers we pull to{' '}
               <span className="accent-serif">grow</span> your brand
             </h2>
@@ -57,7 +57,7 @@ export function Services() {
               <div className="label-mono md:col-span-1">{service.index}</div>
 
               <div className="md:col-span-4">
-                <h3 className="font-serif font-semibold italic text-2xl font-medium tracking-tight md:text-3xl">
+                <h3 className="text-2xl font-medium tracking-tight md:text-3xl">
                   {service.title}
                 </h3>
                 <p className="accent-serif mt-1 text-lg md:text-xl">

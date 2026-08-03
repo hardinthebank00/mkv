@@ -25,7 +25,7 @@ export function Contact() {
 
         <div className="grid grid-cols-1 gap-14 py-16 md:py-24 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <h2 className="font-serif font-semibold italic text-balance text-4xl font-medium leading-[1.02] tracking-tight md:text-6xl">
+            <h2 className="text-balance text-4xl font-medium leading-[1.02] tracking-tight md:text-6xl">
               ready to grow your <span className="accent-serif">store</span>?
             </h2>
             <p className="mt-6 max-w-md text-pretty leading-relaxed text-muted-foreground">
