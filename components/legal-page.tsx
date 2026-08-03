@@ -21,12 +21,20 @@ export function LegalPage({
     <div className="flex min-h-dvh flex-col">
       <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/85 backdrop-blur-md">
         <div className="flex h-16 w-full items-center justify-between pl-4 pr-4 md:pl-6 md:pr-6">
-          <Link href="/" className="flex items-center" aria-label="MKV Company home">
+          <Link
+            href="/"
+            className="flex items-center gap-2"
+            aria-label="MKV Company home"
+          >
             <img
-              src="/mkv-logo.png"
-              alt="MKV Company — Vision to Visibility"
-              className="h-9 w-auto md:h-10"
+              src="/mkv-icon.png"
+              alt=""
+              aria-hidden="true"
+              className="h-11 w-11 shrink-0 object-contain md:h-12 md:w-12"
             />
+            <span className="text-lg font-semibold tracking-tight text-foreground">
+              mkv company
+            </span>
           </Link>
           <Link
             href="/"
