@@ -123,6 +123,9 @@ export function RouteTransitionProvider({
   const active = phase !== 'idle'
   const segment = 1 / COLUMNS
   const barWindow = segment * (1 + BAR_OVERLAP)
+  // Stagger the bar starts so the LAST bar still finishes exactly at
+  // progress === 1 (otherwise its window runs past 1 and never fully closes).
+  const startStep = (1 - barWindow) / (COLUMNS - 1)
 
   return (
     <RouteTransitionContext.Provider value={navigate}>
@@ -135,15 +138,20 @@ export function RouteTransitionProvider({
       >
         {Array.from({ length: COLUMNS }).map((_, i) => {
           // Each bar fills across its own slice of the sweep, left -> right.
-          const localProgress = clamp01((progress - i * segment) / barWindow)
+          const localProgress = clamp01((progress - i * startStep) / barWindow)
           const scaleX = easeInOutCubic(localProgress)
 
           return (
-            <div key={i} className="relative h-full flex-1 overflow-hidden">
+            <div key={i} className="relative h-full flex-1">
               <div
                 style={{
                   position: 'absolute',
-                  inset: 0,
+                  top: 0,
+                  bottom: 0,
+                  left: 0,
+                  // Overhang 1px past the right edge so adjacent bars overlap
+                  // and no hairline seam shows through.
+                  right: -1,
                   backgroundColor: BAR_COLOR,
                   transformOrigin: 'left',
                   transform: `scaleX(${scaleX})`,
