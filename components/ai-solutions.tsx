@@ -17,7 +17,7 @@ export function AiSolutions() {
         </div>
 
         <div className="py-16 md:py-24">
-          <p className="max-w-4xl text-balance text-3xl font-medium leading-[1.15] tracking-tight md:text-5xl md:leading-[1.1]">
+          <p className="max-w-4xl font-serif font-semibold italic text-balance text-3xl font-medium leading-[1.15] tracking-tight md:text-5xl md:leading-[1.1]">
             we treat ai as{' '}
             <span className="accent-serif">infrastructure</span>, not a feature.
             practical systems that shorten response times, sharpen forecasting,
