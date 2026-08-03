@@ -1,52 +1,93 @@
-const footerLinks = [
-  { href: '#services', label: 'Services' },
-  { href: '#ai', label: 'AI Solutions' },
-  { href: '#about', label: 'About' },
-  { href: '#contact', label: 'Contact' },
-  { href: '/privacy', label: 'Privacy Policy' },
-  { href: '/terms', label: 'Terms of Service' },
+const navLinks = [
+  { href: '#services', label: 'services' },
+  { href: '#work', label: 'work' },
+  { href: '#ai', label: 'ai operations' },
+  { href: '#about', label: 'studio' },
+  { href: '#contact', label: 'contact' },
+]
+
+const legalLinks = [
+  { href: '/privacy', label: 'privacy policy' },
+  { href: '/terms', label: 'terms of service' },
 ]
 
 export function SiteFooter() {
   return (
-    <footer className="py-14">
-      <div className="mx-auto w-full max-w-6xl px-6">
-        <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
-          <a href="#top" className="flex items-center" aria-label="MKV Company home">
-            <img
-              src="/mkv-logo.png"
-              alt="MKV Company — Vision to Visibility"
-              className="h-14 w-auto"
-            />
-          </a>
+    <footer className="bg-foreground text-background">
+      <div className="mx-auto w-full max-w-6xl px-4 md:px-6">
+        <div className="grid grid-cols-1 gap-12 py-16 md:grid-cols-12 md:py-20">
+          <div className="md:col-span-6">
+            <span className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-background/50">
+              vision to visibility
+            </span>
+            <h2 className="mt-6 max-w-md text-balance text-3xl font-medium leading-[1.05] tracking-tight md:text-5xl">
+              let&apos;s build your next{' '}
+              <span className="font-serif italic text-primary">chapter</span>.
+            </h2>
+            <a
+              href="mailto:contact@mkvcompany.business"
+              className="mt-8 inline-flex items-center gap-3 border-b border-background/25 pb-2 transition-colors hover:border-primary"
+            >
+              <span className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-background/50">
+                email
+              </span>
+              <span className="text-lg font-medium tracking-tight">
+                contact@mkvcompany.business
+              </span>
+            </a>
+          </div>
+
           <nav
             aria-label="Footer"
-            className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3"
+            className="md:col-span-3 md:col-start-8"
           >
-            {footerLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {link.label}
-              </a>
-            ))}
+            <span className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-background/50">
+              menu
+            </span>
+            <ul className="mt-5 flex flex-col gap-3">
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="font-mono text-sm uppercase tracking-[0.08em] text-background/70 transition-colors hover:text-background"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <nav aria-label="Legal" className="md:col-span-2">
+            <span className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-background/50">
+              legal
+            </span>
+            <ul className="mt-5 flex flex-col gap-3">
+              {legalLinks.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="font-mono text-sm uppercase tracking-[0.08em] text-background/70 transition-colors hover:text-background"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </nav>
         </div>
 
-        <div className="mt-10 border-t border-border pt-8 text-center text-sm text-muted-foreground">
-          <p>This website is operated by MKV Company</p>
-          <p className="mt-1">
-            <a
-              href="mailto:contact@mkvcompany.business"
-              className="transition-colors hover:text-foreground"
-            >
-              contact@mkvcompany.business
-            </a>
-          </p>
-          <p className="mt-1">
-            &copy; {new Date().getFullYear()} MKV Company. All rights reserved.
+        <div className="flex flex-col items-start justify-between gap-4 border-t border-background/15 py-8 md:flex-row md:items-center">
+          <span className="inline-flex items-center gap-2">
+            <span className="inline-flex size-7 items-center justify-center rounded bg-primary font-mono text-xs font-semibold tracking-tight text-primary-foreground">
+              mkv
+            </span>
+            <span className="font-mono text-sm uppercase tracking-[0.14em] text-background/80">
+              company
+            </span>
+          </span>
+          <p className="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-background/50">
+            &copy; {new Date().getFullYear()} mkv company — all rights reserved
           </p>
         </div>
       </div>

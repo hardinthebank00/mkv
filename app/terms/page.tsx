@@ -13,6 +13,7 @@ export default function TermsPage() {
       title="Terms of Service"
       subtitle="Please read these terms carefully before using our services"
       updated="February 2026"
+      index="t01"
     >
       <LegalSection heading="Agreement to Terms">
         <p>

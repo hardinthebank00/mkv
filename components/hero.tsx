@@ -1,9 +1,3 @@
-const stats = [
-  { value: '120+', label: 'Storefronts Launched' },
-  { value: '96%', label: 'Client Retention' },
-  { value: '24/7', label: 'Support Coverage' },
-]
-
 const platforms = [
   { name: 'Shopify', src: '/logos/shopify-default.svg', href: 'https://www.shopify.com' },
   { name: 'Mailchimp', src: '/logos/mailchimp-default.svg', href: 'https://mailchimp.com' },
@@ -19,55 +13,79 @@ const platforms = [
 // which keeps the -50% marquee loop seamless with no blank gaps.
 const marqueeGroup = [...platforms, ...platforms, ...platforms]
 
+const stats = [
+  { value: '4.1x', label: 'blended roas' },
+  { value: '+58%', label: 'retention lift' },
+  { value: '120+', label: 'storefronts shipped' },
+  { value: '96%', label: 'client retention' },
+]
+
 export function Hero() {
   return (
-    <section id="top" className="relative overflow-hidden pt-20">
-      <div
-        aria-hidden="true"
-        className="grid-backdrop pointer-events-none absolute inset-0"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_10%,var(--background)_75%)]"
-      />
+    <section id="top" className="relative overflow-hidden pt-16">
+      <div className="mx-auto w-full max-w-6xl px-4 md:px-6">
+        {/* Eyebrow row */}
+        <div className="flex items-center justify-between gap-4 border-b border-border py-5">
+          <span className="label-mono">d2c growth studio</span>
+          <span className="label-mono hidden sm:inline">
+            vision to visibility
+          </span>
+          <span className="label-mono">/ 001</span>
+        </div>
 
-      <div className="relative mx-auto flex w-full max-w-4xl flex-col items-center px-6 py-24 text-center md:py-32">
-        <img
-          src="/mkv-logo.png"
-          alt="MKV Company — Vision to Visibility"
-          className="mb-10 h-28 w-auto sm:h-32 md:h-40"
-        />
-        <h1 className="text-balance text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-          Your D2C E-Commerce Partner
-        </h1>
-        <p className="mt-6 max-w-2xl text-pretty leading-relaxed text-muted-foreground md:text-lg">
-          MKV Company builds, scales, and automates online brands. From
-          storefront engineering to paid media, retention, and AI-powered
-          operations, we run the full commerce stack so your team can focus on
-          product.
-        </p>
+        {/* Headline */}
+        <div className="py-14 md:py-20">
+          <h1 className="max-w-5xl text-balance text-5xl font-medium leading-[0.95] tracking-tight sm:text-6xl md:text-7xl lg:text-[5.5rem]">
+            we turn d2c <span className="accent-serif">vision</span> into{' '}
+            <span className="accent-serif">visibility</span>, revenue, and
+            retention.
+          </h1>
 
-        <div className="mt-12 grid w-full grid-cols-1 gap-4 sm:grid-cols-3">
+          <div className="mt-10 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+            <p className="max-w-md text-pretty text-base leading-relaxed text-muted-foreground">
+              MKV Company is a full-service partner for direct-to-consumer
+              brands — engineering, paid media, lifecycle, and AI operations
+              under one roof.
+            </p>
+            <div className="flex flex-wrap items-center gap-3">
+              <a
+                href="#contact"
+                className="inline-flex items-center rounded-full bg-foreground px-6 py-3 font-mono text-xs uppercase tracking-[0.12em] text-background transition-opacity hover:opacity-90"
+              >
+                start a project
+              </a>
+              <a
+                href="#work"
+                className="inline-flex items-center rounded-full border border-border px-6 py-3 font-mono text-xs uppercase tracking-[0.12em] text-foreground transition-colors hover:bg-muted"
+              >
+                selected work
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Stats row */}
+        <div className="grid grid-cols-2 gap-px overflow-hidden border-y border-border bg-border md:grid-cols-4">
           {stats.map((stat) => (
-            <div
-              key={stat.label}
-              className="rounded-xl border border-border bg-card px-6 py-6"
-            >
-              <div className="text-3xl font-bold tracking-tight text-primary">
+            <div key={stat.label} className="bg-background px-5 py-8">
+              <span
+                className="mb-4 block h-2 w-2 rounded-full bg-primary"
+                aria-hidden="true"
+              />
+              <div className="text-3xl font-medium tracking-tight md:text-4xl">
                 {stat.value}
               </div>
-              <div className="mt-1 text-sm text-muted-foreground">
-                {stat.label}
-              </div>
+              <div className="label-mono mt-2">{stat.label}</div>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="relative border-y border-border bg-card/40 py-8">
-        <p className="mb-6 text-center font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
-          Platforms we build on
-        </p>
+      {/* Platform marquee */}
+      <div className="mt-14 border-t border-border py-8">
+        <div className="mx-auto mb-6 max-w-6xl px-4 md:px-6">
+          <span className="label-mono">platforms we build on</span>
+        </div>
         <div className="relative flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
           {/* Single track holding two identical halves; translateX(-50%)
               scrolls exactly one half so the loop is perfectly seamless. */}
@@ -84,7 +102,7 @@ export function Hero() {
                 <img
                   src={platform.src || '/placeholder.svg'}
                   alt=""
-                  className="h-10 w-auto transition-transform duration-300 hover:scale-110 md:h-12"
+                  className="h-9 w-auto opacity-80 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 md:h-10"
                 />
               </a>
             ))}

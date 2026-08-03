@@ -13,6 +13,7 @@ export default function PrivacyPage() {
       title="Privacy Policy"
       subtitle="Protecting your personal information"
       updated="February 2026"
+      index="p01"
     >
       <LegalSection heading="Information we collect">
         <p>
