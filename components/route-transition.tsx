@@ -17,10 +17,12 @@ const RouteTransitionContext = createContext<(href: string) => void>(() => {})
 export const useRouteTransition = () => useContext(RouteTransitionContext)
 
 // Thin vertical bars that fill in left -> right (growing horizontally),
-// then clear out left -> right to reveal the new page.
-const COLUMNS = 6
-const BAR_MS = 200 // how long a single bar takes to fill/clear
-const STAGGER_MS = 48 // delay between each bar (drives the left->right sweep)
+// one fully loading before the next begins, then clear out to reveal.
+const COLUMNS = 5
+const BAR_MS = 150 // how long a single bar takes to fill/clear
+const STAGGER_MS = 150 // == BAR_MS so bars load strictly one at a time
+// Aesthetic soft gray so the orange accent on the K reads strongly.
+const BAR_COLOR = '#d8d5d0'
 
 // The three brand letters, revealed one at a time as the sweep crosses.
 const LETTERS = [
@@ -109,7 +111,7 @@ export function RouteTransitionProvider({
                 style={{
                   position: 'absolute',
                   inset: 0,
-                  backgroundColor: 'var(--primary)',
+                  backgroundColor: BAR_COLOR,
                   transformOrigin: 'left',
                   transform: filled ? 'scaleX(1)' : 'scaleX(0)',
                   transition:
@@ -128,7 +130,7 @@ export function RouteTransitionProvider({
           {LETTERS.map((letter, i) => {
             // Space each letter's reveal evenly across the sweep so M, K, V
             // pop in one after another as the bars travel left -> right.
-            const revealAt = Math.round((SWEEP_MS - 120) * (i / LETTERS.length))
+            const revealAt = Math.round(SWEEP_MS * ((i + 1) / (LETTERS.length + 1)))
             return (
               <img
                 key={letter.src}
