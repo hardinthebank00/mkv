@@ -95,10 +95,10 @@ export function Hero() {
                       opacity: i === wordIndex ? 1 : 0,
                     }}
                   >
-                    <span className="relative inline-flex items-center px-[0.14em] font-serif font-semibold italic leading-none text-foreground">
+                    <span className="relative inline-flex items-center px-[0.16em] py-[0.08em] font-serif font-semibold italic leading-none text-foreground">
                       <span
                         aria-hidden="true"
-                        className="pointer-events-none absolute inset-x-0 inset-y-[0.14em] -z-10 -skew-x-[11deg] rounded-[3px] bg-primary/35"
+                        className="pointer-events-none absolute inset-0 -z-10 -skew-x-[11deg] rounded-[3px] bg-primary/35"
                       />
                       {word}
                     </span>
@@ -116,7 +116,7 @@ export function Hero() {
                     ref={(el) => {
                       measureRefs.current[i] = el
                     }}
-                    className="whitespace-nowrap px-[0.14em] font-serif font-semibold italic"
+                    className="whitespace-nowrap px-[0.16em] py-[0.08em] font-serif font-semibold italic"
                   >
                     {word}
                   </span>
