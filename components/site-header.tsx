@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useRouter, usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
 
 const links = [
@@ -13,6 +14,8 @@ const links = [
 export function SiteHeader() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const router = useRouter()
+  const pathname = usePathname()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12)
@@ -20,6 +23,15 @@ export function SiteHeader() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    if (pathname === '/start') {
+      router.push('/')
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
 
   return (
     <header
@@ -30,7 +42,7 @@ export function SiteHeader() {
       }`}
     >
       <div className="flex h-16 w-full items-center justify-between pl-4 pr-4 md:pl-6 md:pr-6">
-        <a href="#top" className="flex items-center" aria-label="MKV Company home">
+        <a href="#" onClick={handleLogoClick} className="flex items-center" aria-label="MKV Company home">
           <img
             src="/mkv-logo.png"
             alt="MKV Company — Vision to Visibility"
@@ -59,8 +71,8 @@ export function SiteHeader() {
             mkv / §d2c
           </span>
           <a
-            href="#contact"
-            className="hidden items-center rounded-full bg-foreground px-4 py-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-background transition-opacity hover:opacity-90 sm:inline-flex"
+            href="/start"
+            className="hidden items-center rounded-full bg-primary px-4 py-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-black transition-opacity hover:opacity-90 sm:inline-flex"
           >
             start a project
           </a>
