@@ -15,7 +15,7 @@ export function SiteHeader() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
-      <div className="mx-auto flex h-20 w-full max-w-6xl items-center justify-between px-6">
+      <div className="flex h-20 w-full items-center justify-between pl-4 pr-6">
         <a href="#top" className="flex items-center" aria-label="MKV Company home">
           <img
             src="/mkv-logo.png"

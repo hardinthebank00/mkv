@@ -5,14 +5,14 @@ const stats = [
 ]
 
 const platforms = [
-  { name: 'Shopify', src: '/logos/shopify-default.svg' },
-  { name: 'Mailchimp', src: '/logos/mailchimp-default.svg' },
-  { name: 'Meta Ads', src: '/logos/meta-default.svg' },
-  { name: 'Google Ads', src: '/logos/google-ads-default.svg' },
-  { name: 'TikTok', src: '/logos/tiktok-default.svg' },
-  { name: 'Stripe', src: '/logos/stripe-default.svg' },
-  { name: 'Next.js', src: '/logos/nextdotjs-default.svg' },
-  { name: 'Vercel', src: '/logos/vercel.svg' },
+  { name: 'Shopify', src: '/logos/shopify-default.svg', href: 'https://www.shopify.com' },
+  { name: 'Mailchimp', src: '/logos/mailchimp-default.svg', href: 'https://mailchimp.com' },
+  { name: 'Meta Ads', src: '/logos/meta-default.svg', href: 'https://www.facebook.com/business/ads' },
+  { name: 'Google Ads', src: '/logos/google-ads-default.svg', href: 'https://ads.google.com' },
+  { name: 'TikTok', src: '/logos/tiktok-default.svg', href: 'https://ads.tiktok.com' },
+  { name: 'Stripe', src: '/logos/stripe-default.svg', href: 'https://stripe.com' },
+  { name: 'Next.js', src: '/logos/nextdotjs-default.svg', href: 'https://nextjs.org' },
+  { name: 'Vercel', src: '/logos/vercel.svg', href: 'https://vercel.com' },
 ]
 
 // Repeat the list so a single group is always wider than the viewport,
@@ -68,26 +68,25 @@ export function Hero() {
         <p className="mb-6 text-center font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
           Platforms we build on
         </p>
-        <div
-          className="relative flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"
-          role="img"
-          aria-label="Platforms we build on: Shopify, Mailchimp, Meta Ads, Google Ads, TikTok, Stripe, Next.js, and Vercel"
-        >
+        <div className="relative flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
           {/* Single track holding two identical halves; translateX(-50%)
               scrolls exactly one half so the loop is perfectly seamless. */}
           <div className="flex w-max shrink-0 animate-marquee items-center">
             {[...marqueeGroup, ...marqueeGroup].map((platform, index) => (
-              <span
+              <a
                 key={`${platform.name}-${index}`}
+                href={platform.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Visit ${platform.name}`}
                 className="flex items-center px-8 sm:px-12"
-                aria-hidden="true"
               >
                 <img
                   src={platform.src || '/placeholder.svg'}
                   alt=""
                   className="h-10 w-auto transition-transform duration-300 hover:scale-110 md:h-12"
                 />
-              </span>
+              </a>
             ))}
           </div>
         </div>
