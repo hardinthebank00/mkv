@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono, Fraunces } from 'next/font/google'
+import { RouteTransitionProvider } from '@/components/route-transition'
 import './globals.css'
 
 const geistSans = Geist({
@@ -67,7 +68,7 @@ export default function RootLayout({
       className={`bg-background ${geistSans.variable} ${geistMono.variable} ${fraunces.variable}`}
     >
       <body className="font-sans antialiased">
-        {children}
+        <RouteTransitionProvider>{children}</RouteTransitionProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

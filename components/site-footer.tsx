@@ -1,8 +1,8 @@
 'use client'
 
-import { usePathname, useRouter } from 'next/navigation'
-import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { scrollToSection } from '@/lib/scroll-to-section'
+import { useRouteTransition } from '@/components/route-transition'
 
 const linkColumns = [
   {
@@ -32,23 +32,29 @@ const linkColumns = [
 
 export function SiteFooter() {
   const pathname = usePathname()
-  const router = useRouter()
+  const navigateWithTransition = useRouteTransition()
   const isStartPage = pathname === '/start'
 
-  // Smoothly flow into an on-page section. When we're not on the home page
-  // (e.g. /start), navigate home with the hash and let it scroll on load.
-  const handleSectionNav = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string,
-  ) => {
-    if (!href.startsWith('#')) return
+  // Section hashes flow via smooth scroll; page routes play the redirect
+  // transition. On a sub-page, section links go home with the hash first.
+  const handleNav = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    // Let mailto/external links behave normally.
+    if (!href.startsWith('#') && !href.startsWith('/')) return
+
     e.preventDefault()
-    const id = href.slice(1)
-    if (pathname === '/') {
-      scrollToSection(id)
-    } else {
-      router.push(`/${href}`)
+
+    if (href.startsWith('#')) {
+      const id = href.slice(1)
+      if (pathname === '/') {
+        scrollToSection(id)
+      } else {
+        navigateWithTransition(`/${href}`)
+      }
+      return
     }
+
+    // Page route ("/start", "/privacy", "/terms") -> animated redirect.
+    navigateWithTransition(href)
   }
 
   const handleScrollTop = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -130,6 +136,7 @@ export function SiteFooter() {
                 <div className="shrink-0">
                   <a
                     href="/start"
+                    onClick={(e) => handleNav(e, '/start')}
                     className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-mono text-xs font-semibold uppercase tracking-[0.12em] text-black transition-opacity hover:opacity-90"
                   >
                     start today
@@ -174,7 +181,7 @@ export function SiteFooter() {
                         <li key={link.label}>
                           <a
                             href={link.href}
-                            onClick={(e) => handleSectionNav(e, link.href)}
+                            onClick={(e) => handleNav(e, link.href)}
                             className="text-sm lowercase text-foreground/80 transition-colors hover:text-primary"
                           >
                             {link.label}

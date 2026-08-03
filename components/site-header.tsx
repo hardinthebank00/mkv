@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
 import { scrollToSection } from '@/lib/scroll-to-section'
+import { useRouteTransition } from '@/components/route-transition'
 
 const links = [
   { href: '#services', label: 'services' },
@@ -17,6 +18,7 @@ export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
+  const navigateWithTransition = useRouteTransition()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12)
@@ -100,6 +102,11 @@ export function SiteHeader() {
           </span>
           <a
             href="/start"
+            onClick={(e) => {
+              e.preventDefault()
+              setOpen(false)
+              navigateWithTransition('/start')
+            }}
             className="hidden items-center rounded-full bg-primary px-4 py-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-black transition-opacity hover:opacity-90 sm:inline-flex"
           >
             start a project

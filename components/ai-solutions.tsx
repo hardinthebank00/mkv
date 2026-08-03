@@ -1,4 +1,5 @@
 import { AccentWord } from './accent-word'
+import { TransitionLink } from './transition-link'
 
 const capabilities = [
   'support agents',
@@ -43,12 +44,12 @@ export function AiSolutions() {
             ))}
           </div>
 
-          <a
+          <TransitionLink
             href="/start"
             className="mt-12 inline-flex items-center rounded-full bg-foreground px-6 py-3 font-mono text-xs uppercase tracking-[0.12em] text-background transition-opacity hover:opacity-90"
           >
             explore ai solutions
-          </a>
+          </TransitionLink>
         </div>
       </div>
     </section>
