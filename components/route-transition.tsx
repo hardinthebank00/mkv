@@ -16,13 +16,14 @@ const RouteTransitionContext = createContext<(href: string) => void>(() => {})
 
 export const useRouteTransition = () => useContext(RouteTransitionContext)
 
-// Thin vertical bars that fill in left -> right (growing horizontally),
-// one fully loading before the next begins, then clear out to reveal.
-const COLUMNS = 5
-const BAR_MS = 150 // how long a single bar takes to fill/clear
-const STAGGER_MS = 150 // == BAR_MS so bars load strictly one at a time
-// Aesthetic soft gray so the orange accent on the K reads strongly.
-const BAR_COLOR = '#d8d5d0'
+// Vertical bars that fade/fill in one-at-a-time, left -> right. The sequence
+// is driven by JS state (a timer bumps `count`) rather than CSS
+// transition-delay, which the browser collapses when every bar's style
+// changes in the same React commit (that was the "all at once" bug).
+const COLUMNS = 6
+const BAR_MS = 130 // time for a single bar to fill (and the gap to the next)
+const BAR_COLOR = '#d8d5d0' // soft gray so the orange K accent stands out
+const COVER_HOLD_MS = 120 // pause on the full logo before swapping routes
 
 // The three brand letters, revealed one at a time as the sweep crosses.
 const LETTERS = [
@@ -31,10 +32,9 @@ const LETTERS = [
   { src: '/mkv-letter-v.png', alt: 'V' },
 ]
 
-// Total time for all bars to finish a sweep (last bar starts + its duration).
-const SWEEP_MS = BAR_MS + STAGGER_MS * (COLUMNS - 1)
-// Small buffer so the screen is guaranteed fully covered before we swap routes.
-const COVER_MS = SWEEP_MS + 60
+// Full left->right sweep = every bar filling back to back.
+const SWEEP_MS = BAR_MS * COLUMNS
+const COVER_MS = SWEEP_MS + COVER_HOLD_MS
 
 export function RouteTransitionProvider({
   children,
@@ -44,15 +44,15 @@ export function RouteTransitionProvider({
   const router = useRouter()
   const pathname = usePathname()
   const [phase, setPhase] = useState<Phase>('idle')
+  // How many bars are currently filled (0..COLUMNS). Drives the staged sweep.
+  const [count, setCount] = useState(0)
   const targetPathRef = useRef<string | null>(null)
 
   const navigate = useCallback(
     (href: string) => {
-      // Ignore while a transition is already running.
       if (phase !== 'idle') return
 
       const targetPath = href.split(/[?#]/)[0]
-      // No transition needed when navigating to the current path.
       if (targetPath === pathname) return
 
       const prefersReducedMotion =
@@ -66,23 +66,44 @@ export function RouteTransitionProvider({
 
       targetPathRef.current = targetPath
       setPhase('cover')
-      // Push once every bar has filled and the screen is covered.
       window.setTimeout(() => router.push(href), COVER_MS)
     },
     [phase, pathname, router],
   )
 
-  // Once the new route has mounted under the cover, clear the bars away.
+  // Cover phase: fill one bar per tick, left -> right.
   useEffect(() => {
-    if (phase === 'cover' && pathname === targetPathRef.current) {
-      const t = window.setTimeout(() => setPhase('reveal'), 80)
-      return () => window.clearTimeout(t)
-    }
-    if (phase === 'reveal') {
-      const t = window.setTimeout(() => {
+    if (phase !== 'cover') return
+    setCount(1)
+    let c = 1
+    const id = window.setInterval(() => {
+      c += 1
+      setCount(c)
+      if (c >= COLUMNS) window.clearInterval(id)
+    }, BAR_MS)
+    return () => window.clearInterval(id)
+  }, [phase])
+
+  // Reveal phase: clear one bar per tick, left -> right.
+  useEffect(() => {
+    if (phase !== 'reveal') return
+    let c = COLUMNS
+    const id = window.setInterval(() => {
+      c -= 1
+      setCount(c)
+      if (c <= 0) {
+        window.clearInterval(id)
         setPhase('idle')
         targetPathRef.current = null
-      }, SWEEP_MS + 40)
+      }
+    }, BAR_MS)
+    return () => window.clearInterval(id)
+  }, [phase])
+
+  // Once the new route has mounted under the full cover, start revealing.
+  useEffect(() => {
+    if (phase === 'cover' && pathname === targetPathRef.current) {
+      const t = window.setTimeout(() => setPhase('reveal'), COVER_HOLD_MS)
       return () => window.clearTimeout(t)
     }
   }, [phase, pathname])
@@ -99,11 +120,8 @@ export function RouteTransitionProvider({
         style={{ visibility: active ? 'visible' : 'hidden' }}
       >
         {Array.from({ length: COLUMNS }).map((_, i) => {
-          // Cover: bars grow horizontally (scaleX 0->1) from the left, each
-          // one starting a beat after the last => a left->right sweep.
-          // Reveal: bars shrink back to the left (scaleX 1->0), same order.
-          const filled = phase === 'cover'
-          const delay = STAGGER_MS * i
+          // A bar is filled when the sweep has reached its index.
+          const filled = i < count
 
           return (
             <div key={i} className="relative h-full flex-1 overflow-hidden">
@@ -114,23 +132,22 @@ export function RouteTransitionProvider({
                   backgroundColor: BAR_COLOR,
                   transformOrigin: 'left',
                   transform: filled ? 'scaleX(1)' : 'scaleX(0)',
-                  transition:
-                    phase === 'idle'
-                      ? 'none'
-                      : `transform ${BAR_MS}ms cubic-bezier(0.76, 0, 0.24, 1)`,
-                  transitionDelay: `${delay}ms`,
+                  opacity: filled ? 1 : 0,
+                  transition: `transform ${BAR_MS}ms cubic-bezier(0.76, 0, 0.24, 1), opacity ${BAR_MS}ms ease`,
                 }}
               />
             </div>
           )
         })}
 
-        {/* Brand letters revealed one at a time, in sync with the sweep. */}
+        {/* Brand letters revealed one at a time as the sweep crosses. */}
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center gap-[0.12em]">
           {LETTERS.map((letter, i) => {
-            // Space each letter's reveal evenly across the sweep so M, K, V
-            // pop in one after another as the bars travel left -> right.
-            const revealAt = Math.round(SWEEP_MS * ((i + 1) / (LETTERS.length + 1)))
+            // Reveal each letter as the sweep passes its share of the screen.
+            const revealThreshold = Math.round(
+              ((i + 1) * COLUMNS) / (LETTERS.length + 1),
+            )
+            const shown = phase === 'cover' && count >= revealThreshold
             return (
               <img
                 key={letter.src}
@@ -138,11 +155,9 @@ export function RouteTransitionProvider({
                 alt={letter.alt}
                 className="h-14 w-auto md:h-20"
                 style={{
-                  opacity: phase === 'cover' ? 1 : 0,
-                  transform:
-                    phase === 'cover' ? 'translateY(0)' : 'translateY(10px)',
-                  transition: 'opacity 180ms ease, transform 180ms ease',
-                  transitionDelay: phase === 'cover' ? `${revealAt}ms` : '0ms',
+                  opacity: shown ? 1 : 0,
+                  transform: shown ? 'translateY(0)' : 'translateY(10px)',
+                  transition: 'opacity 160ms ease, transform 160ms ease',
                 }}
               />
             )
