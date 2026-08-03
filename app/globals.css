@@ -126,16 +126,4 @@
   color: var(--primary);
 }
 
-/* MKV-orange marker-style highlight behind inline text (23.agency style) */
-@utility mark-highlight {
-  background-image: linear-gradient(
-    to bottom,
-    transparent 10%,
-    color-mix(in oklab, var(--primary) 32%, transparent) 10%,
-    color-mix(in oklab, var(--primary) 32%, transparent) 92%,
-    transparent 92%
-  );
-  padding-inline: 0.14em;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
-}
+
