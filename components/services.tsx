@@ -14,7 +14,7 @@ const services = [
     title: 'paid acquisition',
     accent: 'margin, not vanity',
     description:
-      'Creative testing and media buying across Meta, Google, and TikTok, managed against contribution margin instead of vanity metrics.',
+      'Creative testing, content creator sourcing, and media buying across Meta, Google, and TikTok, managed against contribution margin instead of vanity metrics.',
     tags: ['Meta', 'Google', 'TikTok'],
   },
   {
