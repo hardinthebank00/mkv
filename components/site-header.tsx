@@ -71,9 +71,9 @@ export function SiteHeader() {
       <div className="flex h-16 w-full items-center justify-between pl-4 pr-4 md:pl-6 md:pr-6">
         <a href="#" onClick={handleLogoClick} className="flex items-center" aria-label="MKV Company home">
           <img
-            src="/mkv-logo.png"
-            alt="MKV Company — Vision to Visibility"
-            className="h-9 w-auto md:h-10"
+            src="/mkv-wordmark.png"
+            alt="MKV Company"
+            className="h-11 w-auto md:h-12"
           />
         </a>
 
