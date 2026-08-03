@@ -62,18 +62,16 @@ export function Hero() {
 
         {/* Headline */}
         <div className="py-14 md:py-20">
-          <h1 className="max-w-5xl text-balance text-5xl font-medium leading-[0.95] tracking-tight sm:text-6xl md:text-7xl lg:text-[5.5rem]">
+          <h1 className="max-w-5xl text-balance text-5xl font-medium leading-[1.05] tracking-tight sm:text-6xl md:text-7xl lg:text-[5.5rem]">
             we build tools that{' '}
             <span
-              className="relative inline-flex h-[0.95em] overflow-hidden align-bottom transition-[width] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+              className="relative inline-flex h-[1.05em] overflow-hidden align-[-0.16em] leading-none transition-[width] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
               style={activeWidth ? { width: activeWidth } : undefined}
               aria-hidden="true"
             >
               <span
-                className="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
-                style={{
-                  transform: `translateY(-${wordIndex * (100 / rotatingWords.length)}%)`,
-                }}
+                className="flex flex-col leading-none transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                style={{ transform: `translateY(-${wordIndex * 1.05}em)` }}
               >
                 {rotatingWords.map((word, i) => (
                   <span
@@ -81,9 +79,9 @@ export function Hero() {
                     ref={(el) => {
                       measureRefs.current[i] = el
                     }}
-                    className="flex h-[0.95em] w-fit items-center whitespace-nowrap"
+                    className="flex h-[1.05em] w-fit items-center whitespace-nowrap leading-none"
                   >
-                    <span className="mark-highlight accent-serif not-italic">
+                    <span className="mark-highlight font-serif italic">
                       {word}
                     </span>
                   </span>
