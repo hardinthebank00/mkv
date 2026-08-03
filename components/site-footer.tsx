@@ -1,5 +1,6 @@
 'use client'
 
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
 const linkColumns = [
@@ -29,11 +30,14 @@ const linkColumns = [
 ]
 
 export function SiteFooter() {
+  const pathname = usePathname()
+  const isStartPage = pathname === '/start'
+
   return (
     <footer className="bg-background text-foreground">
       {/* Wrapper for overlapping layout */}
       <div className="relative">
-        {/* Dark contact section (moved up to overlap) */}
+        {/* Dark section (conditional content) */}
         <div className="relative -mb-px overflow-hidden rounded-[2.5rem] bg-black px-4 py-20 md:mx-4 md:py-32 lg:mx-6">
           {/* Large muted background text */}
           <div className="absolute inset-0 flex items-center justify-end overflow-hidden pr-4 md:pr-12">
@@ -44,32 +48,71 @@ export function SiteFooter() {
 
           {/* Content */}
           <div className="relative z-10 mx-auto w-full max-w-6xl">
-            <div className="flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-end">
-              {/* Left: headline + description */}
-              <div className="max-w-2xl">
-                <p className="font-mono text-xs uppercase tracking-[0.12em] text-white/50">
-                  let's work together
-                </p>
-                <h2 className="mt-4 text-4xl font-semibold leading-tight text-white sm:text-5xl md:text-6xl">
-                  ready to scale?
-                </h2>
-                <p className="mt-5 max-w-lg text-base leading-relaxed text-white/70">
-                  Let&apos;s build the tools and systems your D2C brand needs to
-                  move, grow, and dominate.
-                </p>
-              </div>
+            {isStartPage ? (
+              <div className="flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-end">
+                {/* Start page content: what happens next */}
+                <div className="max-w-2xl">
+                  <p className="font-mono text-xs uppercase tracking-[0.12em] text-white/50">
+                    here&apos;s what happens next
+                  </p>
+                  <h2 className="mt-4 text-4xl font-semibold leading-tight text-white sm:text-5xl md:text-6xl">
+                    we&apos;ll build <span className="italic">with</span> you.
+                  </h2>
+                  <p className="mt-5 max-w-lg text-base leading-relaxed text-white/70">
+                    After we review your inquiry, we&apos;ll schedule an intro call
+                    to dig into your goals, audit your current setup, and scope out
+                    what a partnership looks like.
+                  </p>
+                </div>
 
-              {/* Right: CTA */}
-              <div className="shrink-0">
-                <a
-                  href="/start"
-                  className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-mono text-xs font-semibold uppercase tracking-[0.12em] text-black transition-opacity hover:opacity-90"
-                >
-                  start today
-                  <span aria-hidden="true">→</span>
-                </a>
+                {/* Right: secondary info or nothing */}
+                <div className="shrink-0 space-y-6 text-sm text-white/70">
+                  <div>
+                    <p className="font-mono text-xs uppercase tracking-[0.12em] text-white/50">
+                      response
+                    </p>
+                    <p className="mt-2 text-lg font-medium text-white">
+                      24–48 hrs
+                    </p>
+                  </div>
+                  <div>
+                    <p className="font-mono text-xs uppercase tracking-[0.12em] text-white/50">
+                      format
+                    </p>
+                    <p className="mt-2 text-lg font-medium text-white">
+                      intro call
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-end">
+                {/* Home page content: CTA */}
+                <div className="max-w-2xl">
+                  <p className="font-mono text-xs uppercase tracking-[0.12em] text-white/50">
+                    let's work together
+                  </p>
+                  <h2 className="mt-4 text-4xl font-semibold leading-tight text-white sm:text-5xl md:text-6xl">
+                    ready to scale?
+                  </h2>
+                  <p className="mt-5 max-w-lg text-base leading-relaxed text-white/70">
+                    Let&apos;s build the tools and systems your D2C brand needs to
+                    move, grow, and dominate.
+                  </p>
+                </div>
+
+                {/* Right: CTA */}
+                <div className="shrink-0">
+                  <a
+                    href="/start"
+                    className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-mono text-xs font-semibold uppercase tracking-[0.12em] text-black transition-opacity hover:opacity-90"
+                  >
+                    start today
+                    <span aria-hidden="true">→</span>
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
