@@ -1,22 +1,35 @@
 'use client'
 
-import { useState } from 'react'
+import { useActionState } from 'react'
+import { useFormStatus } from 'react-dom'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { AccentWord } from '@/components/accent-word'
+import { submitInquiry, type ContactState } from './actions'
 
 const fieldClass =
   'w-full border-0 border-b border-border bg-transparent px-0 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary'
 
 const labelClass = 'label-mono'
 
-export default function StartPage() {
-  const [sent, setSent] = useState(false)
+const initialState: ContactState = { status: 'idle' }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    setSent(true)
-  }
+function SubmitButton() {
+  const { pending } = useFormStatus()
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      className="inline-flex w-full items-center justify-center rounded-full bg-primary px-6 py-3.5 font-mono text-xs uppercase tracking-[0.12em] text-black transition-opacity hover:opacity-90 disabled:opacity-60 sm:w-auto sm:self-start sm:px-10"
+    >
+      {pending ? 'sending…' : 'send inquiry'}
+    </button>
+  )
+}
+
+export default function StartPage() {
+  const [state, formAction] = useActionState(submitInquiry, initialState)
+  const sent = state.status === 'success'
 
   return (
     <>
@@ -83,7 +96,24 @@ export default function StartPage() {
                     </p>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+                  <form action={formAction} className="flex flex-col gap-8">
+                    {/* Honeypot — hidden from users, bots tend to fill it */}
+                    <div
+                      aria-hidden="true"
+                      className="absolute left-[-9999px] h-0 w-0 overflow-hidden"
+                    >
+                      <label htmlFor="company_url">
+                        Do not fill this field
+                      </label>
+                      <input
+                        id="company_url"
+                        name="company_url"
+                        type="text"
+                        tabIndex={-1}
+                        autoComplete="off"
+                      />
+                    </div>
+
                     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
                       <div className="flex flex-col gap-2">
                         <label htmlFor="firstName" className={labelClass}>
@@ -158,12 +188,16 @@ export default function StartPage() {
                       />
                     </div>
 
-                    <button
-                      type="submit"
-                      className="inline-flex w-full items-center justify-center rounded-full bg-primary px-6 py-3.5 font-mono text-xs uppercase tracking-[0.12em] text-black transition-opacity hover:opacity-90 sm:w-auto sm:self-start sm:px-10"
-                    >
-                      send inquiry
-                    </button>
+                    {state.status === 'error' && state.message ? (
+                      <p
+                        role="alert"
+                        className="text-sm leading-relaxed text-destructive"
+                      >
+                        {state.message}
+                      </p>
+                    ) : null}
+
+                    <SubmitButton />
                   </form>
                 )}
               </div>
