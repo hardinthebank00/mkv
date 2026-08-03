@@ -37,12 +37,17 @@ const stats = [
 
 export function Hero() {
   const [wordIndex, setWordIndex] = useState(0)
-  const [widths, setWidths] = useState<number[]>([])
+  const [maxWidth, setMaxWidth] = useState<number>(0)
   const measureRefs = useRef<(HTMLSpanElement | null)[]>([])
 
   useEffect(() => {
-    const measure = () =>
-      setWidths(measureRefs.current.map((el) => el?.offsetWidth ?? 0))
+    const measure = () => {
+      const max = Math.max(
+        0,
+        ...measureRefs.current.map((el) => el?.offsetWidth ?? 0)
+      )
+      setMaxWidth(max)
+    }
     measure()
     window.addEventListener('resize', measure)
     return () => window.removeEventListener('resize', measure)
@@ -54,8 +59,6 @@ export function Hero() {
     }, 2000)
     return () => clearInterval(id)
   }, [])
-
-  const activeWidth = widths[wordIndex]
 
   return (
     <section id="top" className="relative overflow-hidden pt-16">
@@ -74,8 +77,8 @@ export function Hero() {
           <h1 className="max-w-5xl text-pretty text-5xl font-semibold leading-[0.95] tracking-tight sm:text-6xl md:text-7xl lg:text-[5.5rem]">
             we build the tools your business needs to{' '}
             <span
-              className="relative inline-flex h-[1.15em] items-center overflow-hidden align-bottom transition-[width] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
-              style={activeWidth ? { width: activeWidth } : undefined}
+              className="relative inline-flex h-[1.15em] items-center justify-center overflow-hidden align-bottom"
+              style={maxWidth ? { width: maxWidth } : undefined}
               aria-hidden="true"
             >
               {rotatingWords.map((word, i) => {
@@ -86,7 +89,7 @@ export function Hero() {
                 return (
                   <span
                     key={word}
-                    className="absolute inset-0 flex items-center whitespace-nowrap transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                    className="absolute inset-0 flex items-center justify-center whitespace-nowrap transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
                     style={{
                       transform: `translateY(${offset})`,
                       opacity: i === wordIndex ? 1 : 0,
@@ -102,9 +105,9 @@ export function Hero() {
                   </span>
                 )
               })}
-              {/* Hidden measuring layer so the box hugs each word's real width */}
+              {/* Hidden measuring layer to find max word width */}
               <span
-                className="pointer-events-none invisible absolute left-0 top-0 flex flex-col items-start"
+                className="pointer-events-none invisible absolute left-0 top-0 flex flex-col"
                 aria-hidden="true"
               >
                 {rotatingWords.map((word, i) => (
