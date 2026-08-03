@@ -29,13 +29,21 @@ const stats = [
 export function Hero() {
   const [wordIndex, setWordIndex] = useState(0)
   const [widths, setWidths] = useState<number[]>([])
+  const [rowHeight, setRowHeight] = useState(0)
   const measureRefs = useRef<(HTMLSpanElement | null)[]>([])
+  const rowRef = useRef<HTMLSpanElement | null>(null)
 
   useEffect(() => {
-    const measure = () =>
+    const measure = () => {
       setWidths(measureRefs.current.map((el) => el?.offsetWidth ?? 0))
+      setRowHeight(rowRef.current?.offsetHeight ?? 0)
+    }
     measure()
     window.addEventListener('resize', measure)
+    // Re-measure once webfonts finish loading (serif metrics shift).
+    if (typeof document !== 'undefined' && 'fonts' in document) {
+      document.fonts.ready.then(measure)
+    }
     return () => window.removeEventListener('resize', measure)
   }, [])
 
@@ -65,23 +73,31 @@ export function Hero() {
           <h1 className="max-w-5xl text-balance text-5xl font-medium leading-[1.05] tracking-tight sm:text-6xl md:text-7xl lg:text-[5.5rem]">
             we build tools that{' '}
             <span
-              className="relative inline-flex h-[1.05em] overflow-hidden align-[-0.16em] leading-none transition-[width] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
-              style={activeWidth ? { width: activeWidth } : undefined}
+              className="relative inline-flex overflow-hidden align-[-0.18em] transition-[width] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+              style={{
+                width: activeWidth || undefined,
+                height: rowHeight || '1.15em',
+              }}
               aria-hidden="true"
             >
               <span
-                className="flex flex-col leading-none transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
-                style={{ transform: `translateY(-${wordIndex * 1.05}em)` }}
+                className="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                style={{
+                  transform: `translateY(-${wordIndex * rowHeight}px)`,
+                }}
               >
                 {rotatingWords.map((word, i) => (
                   <span
                     key={word}
-                    ref={(el) => {
-                      measureRefs.current[i] = el
-                    }}
-                    className="flex h-[1.05em] w-fit items-center whitespace-nowrap leading-none"
+                    ref={i === 0 ? rowRef : undefined}
+                    className="flex h-[1.15em] w-fit items-center whitespace-nowrap"
                   >
-                    <span className="mark-highlight font-serif italic">
+                    <span
+                      ref={(el) => {
+                        measureRefs.current[i] = el
+                      }}
+                      className="mark-highlight inline-block font-serif text-[0.86em] italic leading-none"
+                    >
                       {word}
                     </span>
                   </span>
