@@ -1,22 +1,23 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { scrollToSection } from '@/lib/scroll-to-section'
 
 const linkColumns = [
   {
     heading: 'studio',
     links: [
       { href: '#services', label: 'services' },
-      { href: '#work', label: 'work' },
+      { href: '#work', label: 'selected work' },
       { href: '#ai', label: 'ai operations' },
-      { href: '#about', label: 'studio' },
+      { href: '#about', label: 'the studio' },
     ],
   },
   {
     heading: 'connect',
     links: [
-      { href: '#contact', label: 'start a project' },
+      { href: '/start', label: 'start a project' },
       { href: 'mailto:main@mkvcompany.business', label: 'email' },
     ],
   },
@@ -31,7 +32,31 @@ const linkColumns = [
 
 export function SiteFooter() {
   const pathname = usePathname()
+  const router = useRouter()
   const isStartPage = pathname === '/start'
+
+  // Smoothly flow into an on-page section. When we're not on the home page
+  // (e.g. /start), navigate home with the hash and let it scroll on load.
+  const handleSectionNav = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    if (!href.startsWith('#')) return
+    e.preventDefault()
+    const id = href.slice(1)
+    if (pathname === '/') {
+      scrollToSection(id)
+    } else {
+      router.push(`/${href}`)
+    }
+  }
+
+  const handleScrollTop = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (pathname !== '/') return
+    e.preventDefault()
+    window.history.replaceState(null, '', window.location.pathname)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   return (
     <footer className="bg-background text-foreground">
@@ -149,6 +174,7 @@ export function SiteFooter() {
                         <li key={link.label}>
                           <a
                             href={link.href}
+                            onClick={(e) => handleSectionNav(e, link.href)}
                             className="text-sm lowercase text-foreground/80 transition-colors hover:text-primary"
                           >
                             {link.label}
@@ -168,6 +194,7 @@ export function SiteFooter() {
               </p>
               <a
                 href="#top"
+                onClick={handleScrollTop}
                 className="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted-foreground transition-colors hover:text-primary"
               >
                 mkvcompany.business

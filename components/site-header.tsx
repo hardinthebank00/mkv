@@ -3,12 +3,13 @@
 import { useEffect, useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
+import { scrollToSection } from '@/lib/scroll-to-section'
 
 const links = [
   { href: '#services', label: 'services' },
   { href: '#work', label: 'work' },
+  { href: '#ai', label: 'ai' },
   { href: '#about', label: 'studio' },
-  { href: '#contact', label: 'contact' },
 ]
 
 export function SiteHeader() {
@@ -24,12 +25,38 @@ export function SiteHeader() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // When we land on the home page with a hash (e.g. navigating from /start),
+  // flow into the target section once layout has settled.
+  useEffect(() => {
+    if (pathname !== '/') return
+    const hash = window.location.hash.slice(1)
+    if (!hash) return
+    const timer = setTimeout(() => scrollToSection(hash), 120)
+    return () => clearTimeout(timer)
+  }, [pathname])
+
   const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
-    if (pathname === '/start') {
-      router.push('/')
-    } else {
+    if (pathname === '/') {
+      window.history.replaceState(null, '', '/')
       window.scrollTo({ top: 0, behavior: 'smooth' })
+    } else {
+      router.push('/')
+    }
+  }
+
+  // Smoothly flow into an on-page section, or navigate home first if needed.
+  const handleSectionNav = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    e.preventDefault()
+    setOpen(false)
+    const id = href.slice(1)
+    if (pathname === '/') {
+      scrollToSection(id)
+    } else {
+      router.push(`/${href}`)
     }
   }
 
@@ -55,6 +82,7 @@ export function SiteHeader() {
             <a
               key={link.href}
               href={link.href}
+              onClick={(e) => handleSectionNav(e, link.href)}
               className="label-mono transition-colors hover:text-foreground"
             >
               {link.label}
@@ -99,7 +127,7 @@ export function SiteHeader() {
             <a
               key={link.href}
               href={link.href}
-              onClick={() => setOpen(false)}
+              onClick={(e) => handleSectionNav(e, link.href)}
               className="label-mono rounded-md px-2 py-3 transition-colors hover:bg-muted hover:text-foreground"
             >
               {link.label}
