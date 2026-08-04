@@ -79,8 +79,8 @@ export function Hero() {
           <h1 className="max-w-5xl text-pretty text-5xl font-semibold leading-[0.95] tracking-tight sm:text-6xl md:text-7xl lg:text-[5.5rem]">
             we build the tools your business needs to{' '}
             <span
-              className="relative inline-flex h-[1.15em] items-center justify-center overflow-hidden align-bottom"
-              style={maxWidth ? { width: maxWidth } : undefined}
+              className="relative inline-flex h-[1.25em] items-center justify-center overflow-hidden align-bottom"
+              style={maxWidth ? { width: maxWidth + 8 } : undefined}
               aria-hidden="true"
             >
               {rotatingWords.map((word, i) => {
@@ -100,14 +100,14 @@ export function Hero() {
                     <span className="relative inline-flex items-center px-[0.16em] py-[0.08em] font-serif font-semibold italic leading-none text-foreground">
                       <span
                         aria-hidden="true"
-                        className="pointer-events-none absolute inset-0 -z-10 -skew-x-[11deg] rounded-[3px] bg-primary/35"
+                        className="pointer-events-none absolute -inset-x-[0.2em] inset-y-0 -z-10 -skew-x-[11deg] rounded-[3px] bg-primary/35"
                       />
                       {word}
                     </span>
                   </span>
                 )
               })}
-              {/* Hidden measuring layer to find max word width */}
+              {/* Hidden measuring layer — must exactly match visible span styles */}
               <span
                 className="pointer-events-none invisible absolute left-0 top-0 flex flex-col"
                 aria-hidden="true"
@@ -118,7 +118,7 @@ export function Hero() {
                     ref={(el) => {
                       measureRefs.current[i] = el
                     }}
-                    className="whitespace-nowrap px-[0.16em] py-[0.08em] font-serif font-semibold italic"
+                    className="whitespace-nowrap px-[0.16em] py-[0.08em] font-serif font-semibold italic leading-none"
                   >
                     {word}
                   </span>
