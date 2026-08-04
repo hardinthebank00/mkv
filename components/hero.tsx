@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { useRouteTransition } from '@/components/route-transition'
 
 const rotatingWords = [
   'move',
@@ -39,6 +40,7 @@ export function Hero() {
   const [wordIndex, setWordIndex] = useState(0)
   const [maxWidth, setMaxWidth] = useState<number>(0)
   const measureRefs = useRef<(HTMLSpanElement | null)[]>([])
+  const navigateWithTransition = useRouteTransition()
 
   useEffect(() => {
     const measure = () => {
@@ -137,7 +139,11 @@ export function Hero() {
             </p>
             <div className="flex flex-wrap items-center gap-3">
               <a
-                href="#contact"
+                href="/start"
+                onClick={(e) => {
+                  e.preventDefault()
+                  navigateWithTransition('/start')
+                }}
                 className="inline-flex items-center rounded-full bg-foreground px-6 py-3 font-mono text-xs uppercase tracking-[0.12em] text-background transition-opacity hover:opacity-90"
               >
                 start a project
