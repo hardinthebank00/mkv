@@ -22,7 +22,9 @@ export const useRouteTransition = () => useContext(RouteTransitionContext)
 // derives its own fill from `progress`, staged so they load one after another
 // with a slight overlap that keeps the sweep fluid.
 const COLUMNS = 6
-const BAR_COLOR = '#d8d5d0' // soft gray so the orange K accent stands out
+// Solid base so the un-swept area / loading page never shows through as white.
+const BASE_COLOR = '#c7c3bd' // darker gray field underneath the bars
+const BAR_COLOR = '#dcd9d4' // lighter gray bars sweep over the base (two-tone)
 const SWEEP_MS = 780 // full left -> right cover sweep
 const COVER_HOLD_MS = 160 // pause on the full logo before swapping routes
 const REVEAL_MS = 640 // sweep clearing away to reveal the new page
@@ -142,6 +144,22 @@ export function RouteTransitionProvider({
         className="pointer-events-none fixed inset-0 z-[100]"
         style={{ visibility: active ? 'visible' : 'hidden' }}
       >
+        {/* Solid gray field that leads the sweep so the logo is never over
+            white, and clears in sync with the bars on reveal (no hard cut). */}
+        {(() => {
+          const baseCover = clamp01(progress / 0.6)
+          return (
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundColor: BASE_COLOR,
+                clipPath: `inset(0 ${(1 - baseCover) * 100}% 0 0)`,
+                WebkitClipPath: `inset(0 ${(1 - baseCover) * 100}% 0 0)`,
+              }}
+            />
+          )
+        })()}
+
         {/* Bars container: fills the screen left -> right */}
         <div className="absolute inset-0 flex">
           {Array.from({ length: COLUMNS }).map((_, i) => {
