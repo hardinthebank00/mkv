@@ -12,6 +12,10 @@ const rotatingWords = [
   'automate',
   'convert',
   'accelerate',
+  'optimize',
+  'streamline',
+  'expand',
+  'thrive',
 ]
 
 const platforms = [
@@ -79,8 +83,8 @@ export function Hero() {
           <h1 className="max-w-5xl text-pretty text-5xl font-semibold leading-[0.95] tracking-tight sm:text-6xl md:text-7xl lg:text-[5.5rem]">
             we build the tools your business needs to{' '}
             <span
-              className="relative inline-flex h-[1.25em] items-center justify-center overflow-hidden align-bottom"
-              style={maxWidth ? { width: maxWidth + 8 } : undefined}
+              className="relative inline-flex h-[1.35em] items-center justify-center overflow-hidden align-bottom"
+              style={maxWidth ? { width: maxWidth + 40 } : undefined}
               aria-hidden="true"
             >
               {rotatingWords.map((word, i) => {
@@ -97,10 +101,10 @@ export function Hero() {
                       opacity: i === wordIndex ? 1 : 0,
                     }}
                   >
-                    <span className="relative inline-flex items-center px-[0.16em] py-[0.08em] font-serif font-semibold italic leading-none text-foreground">
+                    <span className="relative inline-flex items-center px-[0.16em] py-[0.06em] font-serif font-semibold italic leading-none text-foreground">
                       <span
                         aria-hidden="true"
-                        className="pointer-events-none absolute -inset-x-[0.2em] inset-y-0 -z-10 -skew-x-[11deg] rounded-[3px] bg-primary/35"
+                        className="pointer-events-none absolute -inset-x-[0.08em] inset-y-0 -z-10 -skew-x-[11deg] rounded-[3px] bg-primary/35"
                       />
                       {word}
                     </span>
