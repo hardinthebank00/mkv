@@ -2,12 +2,12 @@ import { AccentWord } from './accent-word'
 import { TransitionLink } from './transition-link'
 
 const capabilities = [
-  'support agents',
-  'demand forecasting',
-  'margin-aware pricing',
-  'lifecycle personalization',
-  'anomaly reporting',
-  'catalog automation',
+  { title: 'support agents', description: 'AI-powered customer service that handles inquiries, orders, and support 24/7.' },
+  { title: 'demand forecasting', description: 'Predict inventory needs and customer demand to optimize stock levels.' },
+  { title: 'margin-aware pricing', description: 'Dynamic pricing that maximizes profitability while staying competitive.' },
+  { title: 'lifecycle personalization', description: 'Tailor customer experiences and offers based on their journey stage.' },
+  { title: 'anomaly reporting', description: 'Surface unusual patterns in sales, inventory, and customer behavior instantly.' },
+  { title: 'catalog automation', description: 'Auto-generate product descriptions, tags, and content at scale.' },
 ]
 
 export function AiSolutions() {
@@ -29,17 +29,23 @@ export function AiSolutions() {
           </p>
 
           <div className="mt-14 grid grid-cols-1 gap-px overflow-hidden border border-border bg-border sm:grid-cols-2 md:grid-cols-3">
-            {capabilities.map((item, index) => (
+            {capabilities.map((capability, index) => (
               <div
-                key={item}
-                className="flex items-center gap-4 bg-background px-6 py-6"
+                key={capability.title}
+                className="group flex flex-col gap-3 bg-background px-6 py-6 transition-colors hover:bg-muted/50"
+                title={capability.description}
               >
-                <span className="label-mono">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <span className="text-lg font-medium tracking-tight">
-                  {item}
-                </span>
+                <div className="flex items-center gap-3">
+                  <span className="label-mono">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span className="text-lg font-medium tracking-tight">
+                    {capability.title}
+                  </span>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  {capability.description}
+                </p>
               </div>
             ))}
           </div>
