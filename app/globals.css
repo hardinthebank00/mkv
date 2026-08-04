@@ -7,6 +7,7 @@
 @theme inline {
   --font-sans: 'Geist', 'Geist Fallback';
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --font-serif: 'Fraunces', 'Fraunces Fallback', ui-serif, serif;
 
   --color-ring: var(--ring);
   --color-input: var(--input);
@@ -48,26 +49,27 @@
 
 :root {
   color-scheme: light;
-  --radius: 0.75rem;
+  --radius: 0.5rem;
 
-  --background: oklch(0.985 0.012 78);
-  --foreground: oklch(0.24 0.028 52);
-  --card: oklch(1 0.005 78);
-  --card-foreground: oklch(0.24 0.028 52);
-  --popover: oklch(1 0.005 78);
-  --popover-foreground: oklch(0.24 0.028 52);
-  --primary: oklch(0.66 0.185 46);
-  --primary-foreground: oklch(0.995 0.008 78);
-  --secondary: oklch(0.955 0.032 74);
-  --secondary-foreground: oklch(0.32 0.06 48);
-  --muted: oklch(0.955 0.032 74);
-  --muted-foreground: oklch(0.5 0.045 52);
-  --accent: oklch(0.92 0.055 72);
-  --accent-foreground: oklch(0.3 0.07 46);
+  /* Editorial black-on-white, 23.agency-inspired, with MKV orange accent */
+  --background: oklch(0.995 0 0);
+  --foreground: oklch(0.16 0.005 60);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.16 0.005 60);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.16 0.005 60);
+  --primary: oklch(0.66 0.19 45);
+  --primary-foreground: oklch(0.995 0.005 78);
+  --secondary: oklch(0.965 0.002 60);
+  --secondary-foreground: oklch(0.24 0.01 60);
+  --muted: oklch(0.965 0.002 60);
+  --muted-foreground: oklch(0.55 0.012 60);
+  --accent: oklch(0.95 0.035 70);
+  --accent-foreground: oklch(0.3 0.09 46);
   --destructive: oklch(0.55 0.2 25);
-  --border: oklch(0.66 0.185 46 / 18%);
-  --input: oklch(0.66 0.185 46 / 26%);
-  --ring: oklch(0.66 0.185 46);
+  --border: oklch(0.9 0.003 60);
+  --input: oklch(0.86 0.004 60);
+  --ring: oklch(0.66 0.19 45);
 }
 
 @layer base {
@@ -79,16 +81,50 @@
   }
 }
 
-@utility grid-backdrop {
-  background-image: linear-gradient(
-      to right,
-      color-mix(in oklab, var(--primary) 16%, transparent) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      to bottom,
-      color-mix(in oklab, var(--primary) 16%, transparent) 1px,
-      transparent 1px
-    );
-  background-size: 72px 72px;
+/* Uppercase monospace eyebrow / label */
+@utility label-mono {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
 }
+
+/* Small monospace status pill (e.g. mkv / §001) */
+@utility status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.3rem 0.65rem;
+}
+
+/* Orange marker-style highlight behind inline text */
+@utility ink-highlight {
+  background-image: linear-gradient(
+    to bottom,
+    transparent 12%,
+    color-mix(in oklab, var(--primary) 22%, transparent) 12%,
+    color-mix(in oklab, var(--primary) 22%, transparent) 88%,
+    transparent 88%
+  );
+  padding-inline: 0.1em;
+}
+
+/* Thin serif italic accent, dark text with highlight applied inline */
+@utility accent-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--foreground);
+  line-height: 1.3;
+}
+
+

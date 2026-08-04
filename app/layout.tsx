@@ -1,10 +1,23 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Geist, Geist_Mono, Fraunces } from 'next/font/google'
+import { RouteTransitionProvider } from '@/components/route-transition'
 import './globals.css'
 
-const _geistSans = Geist({ subsets: ['latin'] })
-const _geistMono = Geist_Mono({ subsets: ['latin'] })
+const geistSans = Geist({
+  subsets: ['latin'],
+  variable: '--font-geist-sans',
+})
+const geistMono = Geist_Mono({
+  subsets: ['latin'],
+  variable: '--font-geist-mono',
+})
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+  variable: '--font-fraunces',
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://mkvcompany.business'),
@@ -37,28 +50,11 @@ export const metadata: Metadata = {
     description:
       'Full-service e-commerce development, growth marketing, and AI automation for direct-to-consumer brands.',
   },
-  icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
-  },
 }
 
 export const viewport: Viewport = {
   colorScheme: 'light',
-  themeColor: '#fdf6ef',
+  themeColor: '#ffffff',
 }
 
 export default function RootLayout({
@@ -67,9 +63,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="bg-background">
+    <html
+      lang="en"
+      className={`bg-background ${geistSans.variable} ${geistMono.variable} ${fraunces.variable}`}
+    >
       <body className="font-sans antialiased">
-        {children}
+        <RouteTransitionProvider>{children}</RouteTransitionProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

@@ -1,64 +1,86 @@
-import { Code2, Megaphone, Mail, LineChart } from 'lucide-react'
+import { AccentWord } from './accent-word'
 
 const services = [
   {
-    icon: Code2,
-    title: 'Storefront Engineering',
+    index: '01',
+    title: 'storefront engineering',
+    accent: 'built to convert',
     description:
-      'Headless and native storefronts built for speed, checkout conversion, and clean handoff to your internal team.',
+      'Custom websites, automated workflows, and AI powered customer service agents that handle customer conversations and orders. Built for speed, designed to sell, and easy for your team to run.',
+    tags: ['Shopify', 'Headless', 'Next.js'],
   },
   {
-    icon: Megaphone,
-    title: 'Paid Acquisition',
+    index: '02',
+    title: 'paid acquisition',
+    accent: 'margin, not vanity',
     description:
-      'Creative testing and media buying across Meta, Google, and TikTok, managed against contribution margin instead of vanity metrics.',
+      'Creative testing, content creator sourcing, and media buying across Meta, Google, and TikTok. We focus on profit, not just likes and clicks.',
+    tags: ['Meta', 'Google', 'TikTok'],
   },
   {
-    icon: Mail,
-    title: 'Retention & Lifecycle',
+    index: '03',
+    title: 'retention & lifecycle',
+    accent: 'repeat revenue',
     description:
       'Email and SMS programs, segmentation, and automated flows that turn a first order into a repeat customer.',
+    tags: ['Email', 'SMS', 'Loyalty'],
   },
   {
-    icon: LineChart,
-    title: 'Commerce Strategy',
+    index: '04',
+    title: 'commerce strategy',
+    accent: 'a roadmap you can staff',
     description:
       'Merchandising, pricing, and operations reviews with a roadmap you can actually staff and execute.',
+    tags: ['Strategy', 'Pricing', 'Ops'],
   },
 ]
 
 export function Services() {
   return (
-    <section id="services" className="border-b border-border py-24 md:py-32">
-      <div className="mx-auto w-full max-w-6xl px-6">
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
-            What We Do
-          </p>
-          <h2 className="mt-4 text-balance text-3xl font-bold tracking-tight md:text-4xl">
-            Full-Service E-Commerce Solutions
-          </h2>
-          <p className="mt-4 text-pretty leading-relaxed text-muted-foreground">
-            Everything required to launch a brand, grow demand, and keep
-            customers coming back.
-          </p>
+    <section id="services" className="border-b border-border">
+      <div className="mx-auto w-full max-w-6xl px-4 md:px-6">
+        <div className="flex items-end justify-between gap-6 border-b border-border py-8">
+          <div>
+            <span className="label-mono">services</span>
+            <h2 className="mt-4 max-w-xl text-balance text-3xl font-medium tracking-tight md:text-5xl">
+              four levers we pull to{' '}
+              <AccentWord>grow</AccentWord> your brand
+            </h2>
+          </div>
+          <span className="label-mono hidden shrink-0 md:inline">/ 002</span>
         </div>
 
-        <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div>
           {services.map((service) => (
             <article
-              key={service.title}
-              className="flex flex-col rounded-xl border border-border bg-card p-6 transition-colors hover:border-primary/45"
+              key={service.index}
+              className="group grid grid-cols-1 gap-4 border-b border-border py-8 transition-colors hover:bg-muted/40 md:grid-cols-12 md:items-baseline md:gap-8 md:py-10"
             >
-              <div className="mb-5 inline-flex size-10 items-center justify-center rounded-lg border border-border bg-secondary text-primary">
-                <service.icon className="size-5" aria-hidden="true" />
+              <div className="label-mono md:col-span-1">{service.index}</div>
+
+              <div className="md:col-span-4">
+                <h3 className="text-2xl font-medium tracking-tight md:text-3xl">
+                  {service.title}
+                </h3>
+                <p className="mt-1 text-lg md:text-xl">
+                  <AccentWord>{service.accent}</AccentWord>
+                </p>
               </div>
-              <h3 className="text-base font-semibold tracking-tight">
-                {service.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+
+              <p className="max-w-md text-sm leading-relaxed text-muted-foreground md:col-span-5">
                 {service.description}
               </p>
+
+              <div className="flex flex-wrap gap-2 md:col-span-2 md:justify-end">
+                {service.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border border-border px-2.5 py-1 font-mono text-[0.65rem] uppercase tracking-[0.08em] text-muted-foreground"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </article>
           ))}
         </div>

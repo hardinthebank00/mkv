@@ -1,89 +1,93 @@
-import { ShieldCheck, Award, Handshake, Lock } from 'lucide-react'
+import { AccentWord } from './accent-word'
 
 const values = [
   {
-    icon: ShieldCheck,
-    title: 'Clear Reporting',
+    index: '01',
+    title: 'clear reporting',
     description:
       'Shared dashboards and plain-language updates, so you always know where budget and hours went.',
   },
   {
-    icon: Award,
-    title: 'Senior Execution',
+    index: '02',
+    title: 'senior execution',
     description:
       'The people who scope your project are the people who build it. No handoffs to a junior bench.',
   },
   {
-    icon: Handshake,
-    title: 'Long-Term Partnership',
+    index: '03',
+    title: 'long-term partnership',
     description:
       'We plan in quarters, not campaigns, and we optimise for the health of the business.',
   },
   {
-    icon: Lock,
-    title: 'Security & Compliance',
+    index: '04',
+    title: 'security & compliance',
     description:
       'Data handling, access control, and payment workflows built to satisfy processor and privacy requirements.',
   },
 ]
 
 const badges = [
-  { title: 'PCI DSS', subtitle: 'Aligned' },
-  { title: 'GDPR', subtitle: 'Compliant' },
-  { title: 'SOC 2', subtitle: 'Practices' },
-  { title: 'SSL/TLS', subtitle: 'Secured' },
+  { title: 'PCI DSS', subtitle: 'aligned' },
+  { title: 'GDPR', subtitle: 'compliant' },
+  { title: 'SOC 2', subtitle: 'practices' },
+  { title: 'SSL/TLS', subtitle: 'secured' },
 ]
 
 export function About() {
   return (
-    <section id="about" className="border-b border-border py-24 md:py-32">
-      <div className="mx-auto w-full max-w-6xl px-6">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-balance text-3xl font-bold tracking-tight md:text-4xl">
-            A Commerce Team That Works Like Yours
-          </h2>
-          <p className="mt-4 text-pretty leading-relaxed text-muted-foreground">
-            MKV Company is a digital commerce studio helping brands sell better
-            online. We pair engineering, growth marketing, and applied AI to
-            deliver results you can measure on the P&amp;L.
-          </p>
+    <section id="about" className="border-b border-border">
+      <div className="mx-auto w-full max-w-6xl px-4 md:px-6">
+        <div className="flex items-end justify-between gap-6 border-b border-border py-8">
+          <span className="label-mono">the studio</span>
+          <span className="label-mono hidden shrink-0 md:inline">/ 005</span>
         </div>
 
-        <div className="mt-14 grid grid-cols-1 gap-4 md:grid-cols-2">
-          {values.map((value) => (
-            <article
-              key={value.title}
-              className="flex gap-4 rounded-xl border border-border bg-card p-6"
-            >
-              <div className="inline-flex size-10 shrink-0 items-center justify-center rounded-lg border border-border bg-secondary text-primary">
-                <value.icon className="size-5" aria-hidden="true" />
-              </div>
-              <div>
-                <h3 className="text-base font-semibold tracking-tight">
-                  {value.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {value.description}
-                </p>
-              </div>
-            </article>
-          ))}
-        </div>
+        <div className="grid grid-cols-1 gap-10 py-16 md:grid-cols-12 md:py-24">
+          <div className="md:col-span-5">
+            <h2 className="text-balance text-3xl font-medium leading-[1.05] tracking-tight md:text-5xl">
+              a commerce team that works like{' '}
+              <AccentWord>yours</AccentWord>
+            </h2>
+            <p className="mt-6 max-w-md text-pretty leading-relaxed text-muted-foreground">
+              We help you sell more online. Our team handles the technology,
+              marketing, and smart systems so you can focus on your business.
+            </p>
 
-        <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-4">
-          {badges.map((badge) => (
-            <div
-              key={badge.title}
-              className="rounded-xl border border-border bg-card px-4 py-5 text-center"
-            >
-              <div className="font-mono text-sm font-semibold tracking-wide">
-                {badge.title}
-              </div>
-              <div className="mt-1 text-xs text-muted-foreground">
-                {badge.subtitle}
-              </div>
+            <div className="mt-10 grid grid-cols-2 gap-px overflow-hidden border border-border bg-border">
+              {badges.map((badge) => (
+                <div key={badge.title} className="bg-background px-4 py-5">
+                  <div className="font-mono text-sm font-medium tracking-wide">
+                    {badge.title}
+                  </div>
+                  <div className="label-mono mt-1">{badge.subtitle}</div>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
+
+          <div className="md:col-span-7">
+            <div className="border-t border-border">
+              {values.map((value) => (
+                <article
+                  key={value.index}
+                  className="flex gap-6 border-b border-border py-6"
+                >
+                  <span className="label-mono shrink-0 pt-1">
+                    {value.index}
+                  </span>
+                  <div>
+                    <h3 className="text-xl font-medium tracking-tight">
+                      {value.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      {value.description}
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

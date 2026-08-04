@@ -1,75 +1,208 @@
-const stats = [
-  { value: '120+', label: 'Storefronts Launched' },
-  { value: '96%', label: 'Client Retention' },
-  { value: '24/7', label: 'Support Coverage' },
+'use client'
+
+import { useEffect, useRef, useState } from 'react'
+import { useRouteTransition } from '@/components/route-transition'
+
+const rotatingWords = [
+  'move',
+  'grow',
+  'support',
+  'assist',
+  'scale',
+  'automate',
+  'convert',
+  'accelerate',
+  'optimize',
+  'streamline',
+  'expand',
+  'thrive',
 ]
 
 const platforms = [
-  'Shopify Plus',
-  'Klaviyo',
-  'Meta Ads',
-  'Google Ads',
-  'TikTok Shop',
-  'Stripe',
-  'Next.js',
-  'Vercel',
-  'Postscript',
-  'Triple Whale',
+  { name: 'Shopify', src: '/logos/shopify-default.svg', href: 'https://www.shopify.com' },
+  { name: 'Mailchimp', src: '/logos/mailchimp-default.svg', href: 'https://mailchimp.com' },
+  { name: 'Meta Ads', src: '/logos/meta-default.svg', href: 'https://www.facebook.com/business/ads' },
+  { name: 'Google Ads', src: '/logos/google-ads-default.svg', href: 'https://ads.google.com' },
+  { name: 'TikTok', src: '/logos/tiktok-default.svg', href: 'https://ads.tiktok.com' },
+  { name: 'Stripe', src: '/logos/stripe-default.svg', href: 'https://stripe.com' },
+  { name: 'Next.js', src: '/logos/nextdotjs-default.svg', href: 'https://nextjs.org' },
+  { name: 'Vercel', src: '/logos/vercel.svg', href: 'https://vercel.com' },
+]
+
+// Repeat the list so a single group is always wider than the viewport,
+// which keeps the -50% marquee loop seamless with no blank gaps.
+const marqueeGroup = [...platforms, ...platforms, ...platforms]
+
+const stats = [
+  { value: '4.1x', label: 'blended roas' },
+  { value: '+58%', label: 'retention lift' },
+  { value: '52', label: 'storefronts shipped' },
+  { value: '96%', label: 'client retention' },
 ]
 
 export function Hero() {
+  const [wordIndex, setWordIndex] = useState(0)
+  const [maxWidth, setMaxWidth] = useState<number>(0)
+  const measureRefs = useRef<(HTMLSpanElement | null)[]>([])
+  const navigateWithTransition = useRouteTransition()
+
+  useEffect(() => {
+    const measure = () => {
+      const max = Math.max(
+        0,
+        ...measureRefs.current.map((el) => el?.offsetWidth ?? 0)
+      )
+      setMaxWidth(max)
+    }
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [])
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setWordIndex((i) => (i + 1) % rotatingWords.length)
+    }, 2000)
+    return () => clearInterval(id)
+  }, [])
+
   return (
     <section id="top" className="relative overflow-hidden pt-16">
-      <div
-        aria-hidden="true"
-        className="grid-backdrop pointer-events-none absolute inset-0"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_10%,var(--background)_75%)]"
-      />
+      <div className="mx-auto w-full max-w-6xl px-4 md:px-6">
+        {/* Eyebrow row */}
+        <div className="flex items-center justify-between gap-4 border-b border-border py-5">
+          <span className="label-mono">d2c growth studio</span>
+          <span className="label-mono hidden sm:inline">
+            vision to visibility
+          </span>
+          <span className="label-mono">/ 001</span>
+        </div>
 
-      <div className="relative mx-auto flex w-full max-w-4xl flex-col items-center px-6 py-24 text-center md:py-32">
-        <h1 className="text-balance text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-          Your D2C E-Commerce Partner
-        </h1>
-        <p className="mt-6 max-w-2xl text-pretty leading-relaxed text-muted-foreground md:text-lg">
-          MKV Company builds, scales, and automates online brands. From
-          storefront engineering to paid media, retention, and AI-powered
-          operations, we run the full commerce stack so your team can focus on
-          product.
-        </p>
-
-        <div className="mt-12 grid w-full grid-cols-1 gap-4 sm:grid-cols-3">
-          {stats.map((stat) => (
-            <div
-              key={stat.label}
-              className="rounded-xl border border-border bg-card px-6 py-6"
+        {/* Headline */}
+        <div className="py-14 md:py-20">
+          <h1 className="max-w-5xl text-pretty text-5xl font-semibold leading-[0.95] tracking-tight sm:text-6xl md:text-7xl lg:text-[5.5rem]">
+            we build the tools your business needs to{' '}
+            <span
+              className="relative inline-flex h-[1.35em] items-center justify-center overflow-hidden align-bottom"
+              style={maxWidth ? { width: maxWidth + 40 } : undefined}
+              aria-hidden="true"
             >
-              <div className="text-3xl font-bold tracking-tight text-primary">
+              {rotatingWords.map((word, i) => {
+                const prevIndex =
+                  (wordIndex - 1 + rotatingWords.length) % rotatingWords.length
+                const offset =
+                  i === wordIndex ? '0%' : i === prevIndex ? '-110%' : '110%'
+                return (
+                  <span
+                    key={word}
+                    className="absolute inset-0 flex items-center justify-center whitespace-nowrap transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                    style={{
+                      transform: `translateY(${offset})`,
+                      opacity: i === wordIndex ? 1 : 0,
+                    }}
+                  >
+                    <span className="relative inline-flex items-center px-[0.16em] py-[0.06em] font-serif font-semibold italic leading-none text-foreground">
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute -inset-x-[0.08em] inset-y-0 -z-10 -skew-x-[11deg] rounded-[3px] bg-primary/35"
+                      />
+                      {word}
+                    </span>
+                  </span>
+                )
+              })}
+              {/* Hidden measuring layer — must exactly match visible span styles */}
+              <span
+                className="pointer-events-none invisible absolute left-0 top-0 flex flex-col"
+                aria-hidden="true"
+              >
+                {rotatingWords.map((word, i) => (
+                  <span
+                    key={word}
+                    ref={(el) => {
+                      measureRefs.current[i] = el
+                    }}
+                    className="whitespace-nowrap px-[0.16em] py-[0.08em] font-serif font-semibold italic leading-none"
+                  >
+                    {word}
+                  </span>
+                ))}
+              </span>
+            </span>
+            <span aria-hidden="true" className="-ml-[0.12em] text-primary">.</span>
+            <span className="sr-only">
+              {rotatingWords.join(', ')} your business.
+            </span>
+          </h1>
+
+          <div className="mt-10 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+            <p className="max-w-md text-pretty text-base leading-relaxed text-muted-foreground">
+              MKV Company is a full-service partner for direct-to-consumer
+              brands — engineering, paid media, lifecycle, and AI operations
+              under one roof.
+            </p>
+            <div className="flex flex-wrap items-center gap-3">
+              <a
+                href="/start"
+                onClick={(e) => {
+                  e.preventDefault()
+                  navigateWithTransition('/start')
+                }}
+                className="inline-flex items-center rounded-full bg-foreground px-6 py-3 font-mono text-xs uppercase tracking-[0.12em] text-background transition-opacity hover:opacity-90"
+              >
+                start a project
+              </a>
+              <a
+                href="#work"
+                className="inline-flex items-center rounded-full border border-border px-6 py-3 font-mono text-xs uppercase tracking-[0.12em] text-foreground transition-colors hover:bg-muted"
+              >
+                selected work
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Stats row */}
+        <div className="grid grid-cols-2 gap-px overflow-hidden border-y border-border bg-border md:grid-cols-4">
+          {stats.map((stat) => (
+            <div key={stat.label} className="bg-background px-5 py-8">
+              <span
+                className="mb-4 block h-2 w-2 rounded-full bg-primary"
+                aria-hidden="true"
+              />
+              <div className="text-4xl font-medium tracking-tight md:text-5xl lg:text-6xl">
                 {stat.value}
               </div>
-              <div className="mt-1 text-sm text-muted-foreground">
-                {stat.label}
-              </div>
+              <div className="label-mono mt-2">{stat.label}</div>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="relative border-y border-border bg-card/40 py-8">
-        <p className="mb-6 text-center font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
-          Platforms we build on
-        </p>
-        <div className="relative flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
+      {/* Platform marquee */}
+      <div className="mt-14 border-t border-border py-8">
+        <div className="mx-auto mb-6 max-w-6xl px-4 md:px-6">
+          <span className="label-mono">platforms we build on</span>
+        </div>
+        <div className="relative flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+          {/* Single track holding two identical halves; translateX(-50%)
+              scrolls exactly one half so the loop is perfectly seamless. */}
           <div className="flex w-max shrink-0 animate-marquee items-center">
-            {[...platforms, ...platforms].map((name, index) => (
-              <span
-                key={`${name}-${index}`}
-                className="px-10 text-lg font-semibold tracking-tight text-muted-foreground"
+            {[...marqueeGroup, ...marqueeGroup].map((platform, index) => (
+              <a
+                key={`${platform.name}-${index}`}
+                href={platform.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Visit ${platform.name}`}
+                className="flex items-center px-8 sm:px-12"
               >
-                {name}
-              </span>
+                <img
+                  src={platform.src || '/placeholder.svg'}
+                  alt=""
+                  className="h-9 w-auto opacity-80 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 md:h-10"
+                />
+              </a>
             ))}
           </div>
         </div>
