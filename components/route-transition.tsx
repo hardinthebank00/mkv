@@ -163,7 +163,7 @@ export function RouteTransitionProvider({
         })}
 
         {/* Brand letters revealed one at a time as the sweep crosses. */}
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center gap-[0.12em]">
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center gap-[0.12em] overflow-hidden">
           {LETTERS.map((letter, i) => {
             // Even thresholds so M, K, V pop in one by one across the sweep.
             const threshold = (i + 1) / (LETTERS.length + 1)
