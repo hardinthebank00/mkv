@@ -30,11 +30,17 @@ const REVEAL_MS = 640 // sweep clearing away to reveal the new page
 // higher = more blended). A little overlap reads as one continuous wipe.
 const BAR_OVERLAP = 0.4
 
-// The three brand letters, revealed one at a time as the sweep crosses.
-const LETTERS = [
-  { src: '/mkv-letter-m.png', alt: 'M' },
-  { src: '/mkv-letter-k.png', alt: 'K' },
-  { src: '/mkv-letter-v.png', alt: 'V' },
+// Rather than stitch three separate letter crops (which split the orange
+// accent that straddles the K/V boundary and left a stray fragment), we reveal
+// the ONE original wordmark progressively with clip-path. Cuts land in the
+// gaps between glyphs, and the orange parallelogram is fully contained in the
+// K step, so it can never separate or misalign.
+const WORDMARK = { src: '/mkv-wordmark.png', alt: 'MKV' }
+// [progress threshold at which the step completes, fraction of wordmark shown]
+const REVEAL_STEPS = [
+  { at: 0.25, frac: 0.38 }, // M
+  { at: 0.5, frac: 0.72 }, // K + orange accent (fully included)
+  { at: 0.75, frac: 1.0 }, // V
 ]
 
 const clamp01 = (n: number) => (n < 0 ? 0 : n > 1 ? 1 : n)
@@ -165,29 +171,29 @@ export function RouteTransitionProvider({
           })}
         </div>
 
-        {/* Brand letters revealed one at a time as the sweep crosses, always on top. */}
-        <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center gap-[0.12em]">
-          {LETTERS.map((letter, i) => {
-            // Even thresholds so M, K, V pop in one by one across the sweep.
-            const threshold = (i + 1) / (LETTERS.length + 1)
-            const shown = progress >= threshold
+        {/* The wordmark revealed one glyph at a time via clip-path, on top. */}
+        <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
+          {(() => {
+            // Reveal fraction steps up as the sweep passes each threshold, so
+            // M -> K -> V pop in one at a time with zero misalignment.
+            const revealFrac = REVEAL_STEPS.reduce(
+              (acc, step) => (progress >= step.at ? step.frac : acc),
+              0,
+            )
             return (
               <img
-                key={letter.src}
-                src={letter.src || '/placeholder.svg'}
-                alt={letter.alt}
+                src={WORDMARK.src || '/placeholder.svg'}
+                alt={WORDMARK.alt}
                 className="h-14 w-auto md:h-20"
                 style={{
-                  opacity: shown ? 1 : 0,
-                  transform: shown
-                    ? 'translateY(0) scale(1)'
-                    : 'translateY(8px) scale(0.96)',
-                  transition:
-                    'opacity 220ms ease, transform 260ms cubic-bezier(0.22, 1, 0.36, 1)',
+                  // Reveal from the left edge; hide the not-yet-shown remainder.
+                  clipPath: `inset(0 ${(1 - revealFrac) * 100}% 0 0)`,
+                  WebkitClipPath: `inset(0 ${(1 - revealFrac) * 100}% 0 0)`,
+                  transition: 'clip-path 240ms cubic-bezier(0.22, 1, 0.36, 1)',
                 }}
               />
             )
-          })}
+          })()}
         </div>
       </div>
     </RouteTransitionContext.Provider>
