@@ -133,37 +133,40 @@ export function RouteTransitionProvider({
 
       <div
         aria-hidden={!active}
-        className="pointer-events-none fixed inset-0 z-[100] flex"
+        className="pointer-events-none fixed inset-0 z-[100]"
         style={{ visibility: active ? 'visible' : 'hidden' }}
       >
-        {Array.from({ length: COLUMNS }).map((_, i) => {
-          // Each bar fills across its own slice of the sweep, left -> right.
-          const localProgress = clamp01((progress - i * startStep) / barWindow)
-          const scaleX = easeInOutCubic(localProgress)
+        {/* Bars container: fills the screen left -> right */}
+        <div className="absolute inset-0 flex">
+          {Array.from({ length: COLUMNS }).map((_, i) => {
+            // Each bar fills across its own slice of the sweep, left -> right.
+            const localProgress = clamp01((progress - i * startStep) / barWindow)
+            const scaleX = easeInOutCubic(localProgress)
 
-          return (
-            <div key={i} className="relative h-full flex-1">
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  bottom: 0,
-                  left: 0,
-                  // Overhang 1px past the right edge so adjacent bars overlap
-                  // and no hairline seam shows through.
-                  right: -1,
-                  backgroundColor: BAR_COLOR,
-                  transformOrigin: 'left',
-                  transform: `scaleX(${scaleX})`,
-                  willChange: 'transform',
-                }}
-              />
-            </div>
-          )
-        })}
+            return (
+              <div key={i} className="relative h-full flex-1">
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    bottom: 0,
+                    left: 0,
+                    // Overhang 1px past the right edge so adjacent bars overlap
+                    // and no hairline seam shows through.
+                    right: -1,
+                    backgroundColor: BAR_COLOR,
+                    transformOrigin: 'left',
+                    transform: `scaleX(${scaleX})`,
+                    willChange: 'transform',
+                  }}
+                />
+              </div>
+            )
+          })}
+        </div>
 
-        {/* Brand letters revealed one at a time as the sweep crosses. */}
-        <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center gap-[0.12em] overflow-hidden">
+        {/* Brand letters revealed one at a time as the sweep crosses, always on top. */}
+        <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center gap-[0.12em]">
           {LETTERS.map((letter, i) => {
             // Even thresholds so M, K, V pop in one by one across the sweep.
             const threshold = (i + 1) / (LETTERS.length + 1)
