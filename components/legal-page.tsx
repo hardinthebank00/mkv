@@ -1,6 +1,6 @@
-import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { SiteFooter } from '@/components/site-footer'
+import { TransitionLink } from '@/components/transition-link'
 
 type LegalPageProps = {
   title: string
@@ -21,20 +21,20 @@ export function LegalPage({
     <div className="flex min-h-dvh flex-col">
       <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/85 backdrop-blur-md">
         <div className="flex h-16 w-full items-center justify-between pl-4 pr-4 md:pl-6 md:pr-6">
-          <Link href="/" className="flex items-center" aria-label="MKV Company home">
+          <TransitionLink href="/" className="flex items-center" aria-label="MKV Company home">
             <img
               src="/mkv-wordmark.png"
               alt="MKV Company"
               className="h-11 w-auto md:h-12"
             />
-          </Link>
-          <Link
+          </TransitionLink>
+          <TransitionLink
             href="/"
             className="inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted-foreground transition-colors hover:text-foreground"
           >
             <ArrowLeft className="size-4" aria-hidden="true" />
             back to home
-          </Link>
+          </TransitionLink>
         </div>
       </header>
 

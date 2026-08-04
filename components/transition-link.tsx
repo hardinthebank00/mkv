@@ -6,7 +6,7 @@ type TransitionLinkProps = {
   href: string
   className?: string
   children: React.ReactNode
-}
+} & Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href' | 'onClick'>
 
 /**
  * Anchor that plays the branded route-transition curtain before navigating.
@@ -16,6 +16,7 @@ export function TransitionLink({
   href,
   className,
   children,
+  ...rest
 }: TransitionLinkProps) {
   const navigateWithTransition = useRouteTransition()
 
@@ -27,6 +28,7 @@ export function TransitionLink({
         navigateWithTransition(href)
       }}
       className={className}
+      {...rest}
     >
       {children}
     </a>
