@@ -1,4 +1,8 @@
+'use client'
+
+import { useState } from 'react'
 import { AccentWord } from './accent-word'
+import { ChevronDown } from 'lucide-react'
 
 const services = [
   {
@@ -8,6 +12,8 @@ const services = [
     description:
       'Custom websites, automated workflows, and AI powered customer service agents that handle customer conversations and orders. Built for speed, designed to sell, and easy for your team to run.',
     tags: ['Shopify', 'Headless', 'Next.js'],
+    expandable: true,
+    expandedContent: 'we treat ai as infrastructure, not a feature. practical systems that shorten response times, sharpen forecasting, and remove the repetitive work that slows a growing brand down.',
   },
   {
     index: '02',
@@ -35,6 +41,66 @@ const services = [
   },
 ]
 
+function ServiceItem({ service }: { service: (typeof services)[0] }) {
+  const [expanded, setExpanded] = useState(false)
+
+  return (
+    <>
+      <article className="group grid grid-cols-1 gap-4 border-b border-border py-8 transition-colors hover:bg-muted/40 md:grid-cols-12 md:items-baseline md:gap-8 md:py-10">
+        <div className="label-mono md:col-span-1">{service.index}</div>
+
+        <div className="md:col-span-4">
+          <div className="flex items-start gap-3">
+            <div className="flex-1">
+              <h3 className="text-2xl font-medium tracking-tight md:text-3xl">
+                {service.title}
+              </h3>
+              <p className="mt-1 text-lg md:text-xl">
+                <AccentWord>{service.accent}</AccentWord>
+              </p>
+            </div>
+            {service.expandable && (
+              <button
+                onClick={() => setExpanded(!expanded)}
+                className="mt-1 shrink-0 text-muted-foreground transition-transform hover:text-foreground"
+                aria-expanded={expanded}
+                aria-label={`${expanded ? 'Hide' : 'Show'} AI details`}
+              >
+                <ChevronDown
+                  className={`size-5 transition-transform ${expanded ? 'rotate-180' : ''}`}
+                />
+              </button>
+            )}
+          </div>
+        </div>
+
+        <p className="max-w-md text-sm leading-relaxed text-muted-foreground md:col-span-5">
+          {service.description}
+        </p>
+
+        <div className="flex flex-wrap gap-2 md:col-span-2 md:justify-end">
+          {service.tags.map((tag) => (
+            <span
+              key={tag}
+              className="rounded-full border border-border px-2.5 py-1 font-mono text-[0.65rem] uppercase tracking-[0.08em] text-muted-foreground"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </article>
+
+      {expanded && 'expandedContent' in service && (
+        <div className="border-b border-border bg-muted/30 px-4 py-8 md:px-6 md:py-10">
+          <p className="max-w-3xl text-balance text-lg leading-relaxed text-foreground/80">
+            {service.expandedContent}
+          </p>
+        </div>
+      )}
+    </>
+  )
+}
+
 export function Services() {
   return (
     <section id="services" className="border-b border-border">
@@ -52,36 +118,7 @@ export function Services() {
 
         <div>
           {services.map((service) => (
-            <article
-              key={service.index}
-              className="group grid grid-cols-1 gap-4 border-b border-border py-8 transition-colors hover:bg-muted/40 md:grid-cols-12 md:items-baseline md:gap-8 md:py-10"
-            >
-              <div className="label-mono md:col-span-1">{service.index}</div>
-
-              <div className="md:col-span-4">
-                <h3 className="text-2xl font-medium tracking-tight md:text-3xl">
-                  {service.title}
-                </h3>
-                <p className="mt-1 text-lg md:text-xl">
-                  <AccentWord>{service.accent}</AccentWord>
-                </p>
-              </div>
-
-              <p className="max-w-md text-sm leading-relaxed text-muted-foreground md:col-span-5">
-                {service.description}
-              </p>
-
-              <div className="flex flex-wrap gap-2 md:col-span-2 md:justify-end">
-                {service.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full border border-border px-2.5 py-1 font-mono text-[0.65rem] uppercase tracking-[0.08em] text-muted-foreground"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </article>
+            <ServiceItem key={service.index} service={service} />
           ))}
         </div>
       </div>
