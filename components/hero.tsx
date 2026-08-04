@@ -32,7 +32,7 @@ const marqueeGroup = [...platforms, ...platforms, ...platforms]
 const stats = [
   { value: '4.1x', label: 'blended roas' },
   { value: '+58%', label: 'retention lift' },
-  { value: '120+', label: 'storefronts shipped' },
+  { value: '52', label: 'storefronts shipped' },
   { value: '96%', label: 'client retention' },
 ]
 
@@ -125,7 +125,7 @@ export function Hero() {
                 ))}
               </span>
             </span>
-            <span aria-hidden="true" className="-ml-[0.12em]">.</span>
+            <span aria-hidden="true" className="-ml-[0.12em] text-primary">.</span>
             <span className="sr-only">
               {rotatingWords.join(', ')} your business.
             </span>
@@ -166,7 +166,7 @@ export function Hero() {
                 className="mb-4 block h-2 w-2 rounded-full bg-primary"
                 aria-hidden="true"
               />
-              <div className="text-3xl font-medium tracking-tight md:text-4xl">
+              <div className="text-4xl font-medium tracking-tight md:text-5xl lg:text-6xl">
                 {stat.value}
               </div>
               <div className="label-mono mt-2">{stat.label}</div>
