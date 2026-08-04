@@ -50,9 +50,8 @@ export function About() {
               <AccentWord>yours</AccentWord>
             </h2>
             <p className="mt-6 max-w-md text-pretty leading-relaxed text-muted-foreground">
-              MKV Company is a digital commerce studio helping brands sell
-              better online. We pair engineering, growth marketing, and applied
-              AI to deliver results you can measure on the P&amp;L.
+              We build and scale D2C brands. Engineering, growth, and AI working
+              together to drive revenue and free up your time.
             </p>
 
             <div className="mt-10 grid grid-cols-2 gap-px overflow-hidden border border-border bg-border">
