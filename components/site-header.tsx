@@ -39,11 +39,12 @@ export function SiteHeader() {
 
   const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
+    setOpen(false)
     if (pathname === '/') {
       window.history.replaceState(null, '', '/')
       window.scrollTo({ top: 0, behavior: 'smooth' })
     } else {
-      router.push('/')
+      navigateWithTransition('/')
     }
   }
 
